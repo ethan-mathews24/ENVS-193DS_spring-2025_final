@@ -1,0 +1,221 @@
+---
+title: "ENVS-193DS_spring-2025_final"
+author: "Ethan Mathews"
+date: "06/00/2025"
+format:
+  html:
+    toc: true 
+---
+
+link to GitHub repository: https://github.com/ethan-mathews24/ENVS-193DS_spring-2025_final
+
+
+```{r}
+#| message: false
+
+# Reading in Packages
+
+library(tidyverse)
+
+library(gt)
+
+library(janitor)
+
+library(here)
+
+library(readxl)
+
+library(dplyr)
+
+library(tidyr)
+
+library(fs) # fs::dir_tree(path = ".", recurse = TRUE) in console to get file structure 
+
+sst <- read.csv("data/SST_update.csv")
+
+
+```
+
+
+## Problem 1. Research writing
+
+
+#### a. Transparent statistical methods 
+
+
+
+
+#### b. More information needed
+
+
+
+
+#### c. Suggestions for rewriting 
+
+
+
+
+## Problem 2. Data Visualization 
+
+
+#### a. Cleaning and summarizing 
+
+```{r}
+
+sst_clean <- sst |> # starting dataframe
+  select(date, temp) |>  # selecting only the necessary columns 
+  mutate( # creating new columns using the mutate function
+    year = year(date), # new column name that is populated with the year by using lubridate package to pull only the year from the date column
+    month = month(date, #  new column name that is populated with the month by using the lubridate package 
+                  label = TRUE, #returning the month as a factor instead of a numerical value
+                  abbr = TRUE) # returning the abbreviated month name instead of the full name
+  ) |> 
+  filter(year %in% c(2018, 2019, 2020, 2021, 2022, 2023)) |>   # using the filter function to only select the desired years that we want to plot, also reducing processing load 
+  select(-date) |>  # removing the original date column 
+  group_by(year, month) |> # grouping by year and month 
+  summarize(mean_monthly_sst = mean(temp, na.rm = TRUE), # calculating the mean of the surface temp
+            .groups = "drop") |>  
+  mutate( 
+    mean_monthly_sst = round(mean_monthly_sst, 1), # rounding the mean_monthly_sst to one decimal place
+    year = as.factor(year)) # making sure the years are seen as a factor
+  
+```
+
+```{r}
+
+sst_clean |> 
+  slice_sample(n = 5)
+
+```
+
+```{r}
+
+str(sst_clean)
+
+```
+
+
+#### b. Visualize the data 
+
+```{r}
+
+ggplot(data = sst_clean, # using cleaned dataframe
+       aes(x = month, # assigning the x-axis
+           y = mean_monthly_sst, # assigning the y-axis
+           color = year, # coloring by years
+           group = year)) + # grouping points by years 
+  
+  # first layer: line
+  geom_line(linewidth = 0.5) + # customizing the line width 
+  
+  # seoond layer: points
+  geom_point(size = 1.1) + # customizing the point size
+  
+  scale_color_manual(values = c(
+      "2018" = "#add8e6",  
+      "2019" = "#87ceeb",  
+      "2020" = "#4682b4",  
+      "2021" = "#4169e1",  
+      "2022" = "#0000cd",  
+      "2023" = "#00008b")) + # manually adding colors to the different years
+  
+  labs(x = "Month", # changing the x-axis title 
+      y = "Mean monthly sea surface temperature (°C)", # changing the y-axis title 
+      color = "Year") + # changing the title of the legend 
+  
+  theme_bw() + # base theme to add a line to the border 
+  
+  scale_y_continuous(limits = c(NA, 20)) + # making 20 to be the upper limit of the y-axis 
+  
+  theme(panel.background = element_rect(fill = "white"), # changing the background color
+  panel.grid.major = element_line(color = NA), # removing the color to the grid lines
+  panel.grid.minor = element_line(color = NA), # removing the color to the grid lines
+  axis.title.x = element_text(size = 9),  # changing size of x axis title
+  axis.title.y = element_text(size = 9), # changing size of y axis title
+  legend.position = "inside", # moving the legend to be inside of the figure 
+  legend.position.inside = c(0.1, 0.75) # changing the position of the legend to be inside the graph by treating it as (x,y) coordinates 
+)
+  
+
+```
+
+
+
+## Problem 3. Data Analysis
+
+
+
+
+#### a. Response variable 
+
+
+
+
+#### b. Purpose of study 
+
+
+
+
+#### c. Difference in "seasons"
+
+
+
+
+#### d. Table of models 
+
+
+
+
+#### e. Run the models 
+
+
+
+
+#### f. Check the diagnostics
+
+
+
+
+#### g. Select the best model 
+
+
+
+
+#### h. Visualize the model predictions 
+
+
+
+
+#### i. Write a caption for your figure 
+
+
+
+
+#### j. Calculate model predictions 
+
+
+
+
+#### k. Interpret the results 
+
+
+
+
+## Problem 4. Affective and exploratory visualizations
+
+
+#### a. Comparing visualizations 
+
+
+
+#### b. Sharing your affective visualization 
+
+
+
+
+
+
+
+
+
+
