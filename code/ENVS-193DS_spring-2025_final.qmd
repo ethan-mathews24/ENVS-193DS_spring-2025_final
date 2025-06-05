@@ -1,10 +1,11 @@
 ---
 title: "ENVS-193DS_spring-2025_final"
 author: "Ethan Mathews"
-date: "06/00/2025"
+date: "2025-06-01"
 format:
   html:
     toc: true 
+    toc-depth: 5
 ---
 
 link to GitHub repository: https://github.com/ethan-mathews24/ENVS-193DS_spring-2025_final
@@ -103,7 +104,7 @@ ggplot(data = sst_clean, # using cleaned dataframe
        aes(x = month, # assigning the x-axis
            y = mean_monthly_sst, # assigning the y-axis
            color = year, # coloring by years
-           group = year)) + # grouping points by years 
+           group = year)) + # grouping by years 
   
   # first layer: line
   geom_line(linewidth = 0.5) + # customizing the line width 
@@ -130,8 +131,8 @@ ggplot(data = sst_clean, # using cleaned dataframe
   theme(panel.background = element_rect(fill = "white"), # changing the background color
   panel.grid.major = element_line(color = NA), # removing the color to the grid lines
   panel.grid.minor = element_line(color = NA), # removing the color to the grid lines
-  axis.title.x = element_text(size = 9),  # changing size of x axis title
-  axis.title.y = element_text(size = 9), # changing size of y axis title
+  axis.title.x = element_text(size = 10),  # changing size of x axis title
+  axis.title.y = element_text(size = 10), # changing size of y axis title
   legend.position = "inside", # moving the legend to be inside of the figure 
   legend.position.inside = c(0.1, 0.75) # changing the position of the legend to be inside the graph by treating it as (x,y) coordinates 
 )
@@ -206,6 +207,19 @@ ggplot(data = sst_clean, # using cleaned dataframe
 
 #### a. Comparing visualizations 
 
+**How are the visualizations different from each other in the way you have represented your data?**
+The visualizations differ because in Homework 2, I simply categorized the workouts as either cardiovascular or strength training, providing a broad overview. In Homework 3, I refined the focus by analyzing how specific muscle groups targeted during workouts correlated with water consumption, offering a more nuanced and affective perspective on how exercise intensity influences hydration. This shift in perspective allowed me to move from a general to a more detailed and insightful understanding of the data.
+
+**What similarities do you see between all your visualizations?**
+Even though the visuals take on different approaches, they all share a common focus of showing how water consumption differs based on the type of exercise. Whether examining the difference between workout types or analyzing specific muscle groups, each visualization seeks to explore how exercise impacts hydration. 
+
+
+**What patterns (e.g. differences in means/counts/proportions/medians, trends through time, relationships between variables) do you see in each visualization? Are these different between visualizations? If so, why? If not, why not?**
+Even though there were not a lot of observations in Homework 2, I still noticed clear differences in average water consumption between cardiovascular and strength workouts, reflecting the higher hydration demands of more intensive strength training sessions. In Homework 3, the patterns became more detailed, revealing varying relationships between specific muscle groups engaged and water consumption, showing, for example, that workouts targeting larger muscle groups prompted greater hydration and intensity. While both visualizations highlight differences in water consumption, the most current visuals offer a more focused lens that uncovers subtler patterns that were not visible in the initial exploratory process. 
+
+
+**What kinds of feedback did you get during week 9 in workshop or from the instructors? How did you implement or try those suggestions? If you tried and kept those suggestions, explain how and why; if not, explain why not.**
+During week 9 in workshop the type of feedback that I received focused on the ratio of the body parts to improve clarity and not over represent a body part when the average water consumed did not coincide with it, clarifying what the key is depicting because without hearing the artist statement it would be unclear to the viewers, and finally having a more generalized y-axis that does not start from 1.4 liters and instead starts at 0. I took all of this feedback into consideration because the goal of this project was to humanize the data and make it easier for the viewers to digest than looking at a journal or a datasheet. My peers offered an objective perspective that I valued and applied to my final version. 
 
 
 #### b. Sharing your affective visualization 
