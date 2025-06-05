@@ -23,6 +23,8 @@ library(readxl) # reading excel files
 
 library(dplyr) # enables dataframe manipulation
 
+library(tidyr) # help organize data
+
 library(fs) # allows you to make a tree of the data structure
 
 ```

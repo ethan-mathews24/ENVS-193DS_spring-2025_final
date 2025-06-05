@@ -31,7 +31,7 @@ library(tidyr)
 
 library(fs) # fs::dir_tree(path = ".", recurse = TRUE) in console to get file structure 
 
-sst <- read.csv("data/SST_update.csv")
+sst <- read.csv(here("data", "SST_update.csv"))
 
 
 ```
