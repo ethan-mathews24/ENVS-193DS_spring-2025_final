@@ -15,24 +15,30 @@ link to GitHub repository: https://github.com/ethan-mathews24/ENVS-193DS_spring-
 #| message: false
 
 # Reading in Packages
+library(tidyverse) # general use 
 
-library(tidyverse)
+library(gt) # creating summary tables
 
-library(gt)
+library(janitor) # cleaning data frames 
 
-library(janitor)
+library(here) # file organization
 
-library(here)
-
-library(readxl)
+library(readxl) # reading excel files
 
 library(dplyr)
 
 library(tidyr)
 
+library(ggeffects) # getting model predictions
+
+library(MuMIn) # model selection
+
 library(fs) # fs::dir_tree(path = ".", recurse = TRUE) in console to get file structure 
 
+# reading in datasets
 sst <- read.csv(here("data", "SST_update.csv"))
+
+nest_boxes <- read.csv(here("data", "occdist.csv"))
 
 
 ```
@@ -136,7 +142,7 @@ ggplot(data = sst_clean, # using cleaned dataframe
   legend.position = "inside", # moving the legend to be inside of the figure 
   legend.position.inside = c(0.1, 0.75) # changing the position of the legend to be inside the graph by treating it as (x,y) coordinates 
 )
-  
+
 
 ```
 
@@ -144,27 +150,80 @@ ggplot(data = sst_clean, # using cleaned dataframe
 
 ## Problem 3. Data Analysis
 
+```{r Exploratory Data}
+#| echo: false
+
+nest_clean <- nest_boxes |> 
+  clean_names() |> 
+  rename("swift_parrot" = "sp",
+         "common_starling" = "cs",
+         "unoccupied" = "e",
+         "tree_martin" = "tm"
+         ) |> 
+  select(-box, -event_id, -repeated_use) |> 
+  
+  mutate(season = as.factor(season)) |> 
+  
+  mutate(
+    swift_parrot = as.numeric(swift_parrot),
+    common_starling = as.numeric(common_starling),
+    unoccupied = as.numeric(unoccupied),
+    tree_martin = as.numeric(tree_martin)
+  ) |> 
+  pivot_longer(
+    cols = c(swift_parrot, common_starling, unoccupied, tree_martin),
+    names_to = "species",
+    values_to = "occupancy"
+  )
+  
+nest_clean |> 
+  slice_sample(n=5)
+
+str(nest_clean)
+
+
+```
+
+```{r}
+#| echo: false
+
+ggplot(data = nest_clean,
+       aes(x = season,
+           y = edge_distance)) +
+  geom_jitter(width = 0.1,
+              height = 0,
+              shape = 21,
+              alpha = 0.6)
+  
+
+```
 
 
 
 #### a. Response variable 
 
-
+The 1s and 0s in this dataset are binary representations of whether a particular nest box observation was occupied by a specific species or was empty. For each occupancy type (Swift Parrot, Common Starling, Tree Martin, or empty), a 1 means that category was present in that observation, while a 0 means it was not.”
 
 
 #### b. Purpose of study 
 
-
+The Swift Parrots are the critically endangered target species for conservation efforts with these nest boxes, whereas Common Starlings and Tree Martins are competitor species that also use these boxes but can outcompete or displace the Swift Parrots. While the Swift Parrots are at imminent risk of extinction due to deforestation and the introduction of predators, the other species are more adaptable and, if not managed properly, can exploit the new habitat resources provided by the boxes.
 
 
 #### c. Difference in "seasons"
 
-
-
+The authors compared the years 2016 and 2019, as the Swift Parrots were absent from the site during the interval between the two years. These studies were conducted in November and December, which are ideal months for observing nesting activity: the fledging period for Common Starlings, mid-incubation and mid-nestling period for Swift Parrots, and nest building and incubation for Tree Martins. 
 
 #### d. Table of models 
 
-
+```
+| Model number | season | distance to forest edge |         Predictor list       |  
+|:------------:|:------:|:-----------------------:|:-----------------------------|  
+| 0            |        |                         | no predictors (null model)   |
+| 1            |    X   |           X             | all predictors (full model)  |
+| 2            |    X   |                         | season                       |
+| 3            |        |           X             | distance to forest edge      |
+```
 
 
 #### e. Run the models 
@@ -208,17 +267,21 @@ ggplot(data = sst_clean, # using cleaned dataframe
 #### a. Comparing visualizations 
 
 **How are the visualizations different from each other in the way you have represented your data?**
-The visualizations differ because in Homework 2, I simply categorized the workouts as either cardiovascular or strength training, providing a broad overview. In Homework 3, I refined the focus by analyzing how specific muscle groups targeted during workouts correlated with water consumption, offering a more nuanced and affective perspective on how exercise intensity influences hydration. This shift in perspective allowed me to move from a general to a more detailed and insightful understanding of the data.
+
+The visualizations differ because in Homework 2, I simply categorized the workouts as either cardiovascular or strength training, providing a broad overview. In Homework 3 and the final affective visualization, I refined the focus by analyzing how specific muscle groups targeted during workouts correlated with water consumption, offering a more nuanced and affective perspective on how exercise intensity influences hydration. This shift in perspective allowed me to move from a general to a more detailed and insightful understanding of the data.
 
 **What similarities do you see between all your visualizations?**
+
 Even though the visuals take on different approaches, they all share a common focus of showing how water consumption differs based on the type of exercise. Whether examining the difference between workout types or analyzing specific muscle groups, each visualization seeks to explore how exercise impacts hydration. 
 
 
 **What patterns (e.g. differences in means/counts/proportions/medians, trends through time, relationships between variables) do you see in each visualization? Are these different between visualizations? If so, why? If not, why not?**
-Even though there were not a lot of observations in Homework 2, I still noticed clear differences in average water consumption between cardiovascular and strength workouts, reflecting the higher hydration demands of more intensive strength training sessions. In Homework 3, the patterns became more detailed, revealing varying relationships between specific muscle groups engaged and water consumption, showing, for example, that workouts targeting larger muscle groups prompted greater hydration and intensity. While both visualizations highlight differences in water consumption, the most current visuals offer a more focused lens that uncovers subtler patterns that were not visible in the initial exploratory process. 
+
+Even though there were not a lot of observations in Homework 2, I still noticed clear differences in the overall data distribution in water consumption between cardiovascular and strength training workouts, reflecting the higher hydration demands of more intensive strength training sessions. Since there were more observations in Homework 3, the patterns became more detailed, revealing varying relationships between specific muscle groups  and water consumption, showing, for example, that workouts targeting larger muscle groups prompted greater hydration and intensity. While both graphs in Homework 2 and 3 showcase the median through boxplots, the final affective visualization focuses on the average (mean) value of each body part since it made more sense to use that metric in this type of visualization.  
 
 
 **What kinds of feedback did you get during week 9 in workshop or from the instructors? How did you implement or try those suggestions? If you tried and kept those suggestions, explain how and why; if not, explain why not.**
+
 During week 9 in workshop the type of feedback that I received focused on the ratio of the body parts to improve clarity and not over represent a body part when the average water consumed did not coincide with it, clarifying what the key is depicting because without hearing the artist statement it would be unclear to the viewers, and finally having a more generalized y-axis that does not start from 1.4 liters and instead starts at 0. I took all of this feedback into consideration because the goal of this project was to humanize the data and make it easier for the viewers to digest than looking at a journal or a datasheet. My peers offered an objective perspective that I valued and applied to my final version. 
 
 
