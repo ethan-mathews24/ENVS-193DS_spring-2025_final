@@ -152,6 +152,9 @@ ggplot(data = sst_clean, # using cleaned dataframe
 
 ```{r Exploratory Data}
 #| echo: false
+#| message: false
+#| results: "hide"
+
 
 nest_clean <- nest_boxes |> 
   clean_names() |> 
@@ -161,20 +164,14 @@ nest_clean <- nest_boxes |>
          "tree_martin" = "tm"
          ) |> 
   select(-box, -event_id, -repeated_use) |> 
-  
-  mutate(season = as.factor(season)) |> 
-  
   mutate(
+    season = as.factor(season),
     swift_parrot = as.numeric(swift_parrot),
     common_starling = as.numeric(common_starling),
     unoccupied = as.numeric(unoccupied),
     tree_martin = as.numeric(tree_martin)
-  ) |> 
-  pivot_longer(
-    cols = c(swift_parrot, common_starling, unoccupied, tree_martin),
-    names_to = "species",
-    values_to = "occupancy"
   )
+
   
 nest_clean |> 
   slice_sample(n=5)
@@ -186,6 +183,11 @@ str(nest_clean)
 
 ```{r}
 #| echo: false
+#| message: false
+#| warning: false
+#| results: "hide"
+#| fig.show: "hide"
+
 
 ggplot(data = nest_clean,
        aes(x = season,
@@ -195,9 +197,77 @@ ggplot(data = nest_clean,
               shape = 21,
               alpha = 0.6)
   
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| results: "hide"
+#| fig.show: "hide"
+
+
+ggplot(nest_clean %>% filter(swift_parrot == 1),
+       aes(x = edge_distance)) +
+  geom_histogram(binwidth = 50, fill = "skyblue", color = "black") +
+  labs(
+    title = "Swift Parrot: Distribution of Edge Distance for Occupied Nest Boxes",
+    x = "Distance to forest edge (m)",
+    y = "Count") +
+  theme_minimal()
+
+ggplot(nest_clean %>% filter(common_starling == 1),
+       aes(x = edge_distance)) +
+  geom_histogram(binwidth = 50, fill = "salmon", color = "black") +
+  labs(
+    title = "Common Starling: Distribution of Edge Distance for Occupied Nest Boxes",
+    x = "Distance to forest edge (m)",
+    y = "Count") +
+  theme_minimal()
+
+ggplot(nest_clean %>% filter(unoccupied == 1),
+       aes(x = edge_distance)) +
+  geom_histogram(binwidth = 50, fill = "red", color = "black") +
+  labs(
+    title = "Distribution of Edge Distance for Unoccupied Nest Boxes",
+    x = "Distance to forest edge (m)",
+    y = "Count") +
+  theme_minimal()
+
+ggplot(nest_clean %>% filter(tree_martin == 1),
+       aes(x = edge_distance)) +
+  geom_histogram(binwidth = 50, fill = "darkorchid", color = "black") +
+  labs(
+    title = "Tree Martin: Distribution of Edge Distance for Occupied Nest Boxes",
+    x = "Distance to forest edge (m)",
+    y = "Count") +
+  theme_minimal()
+
 
 ```
 
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| results: "hide"
+#| fig.show: "hide"
+
+
+ggplot(data = nest_clean,
+       aes(x = edge_distance,
+           y = swift_parrot)) + 
+  geom_point(alpha = 0.6,
+             color = "dodgerblue") +
+  labs(
+    title = "Swift Parrot Occupancy vs. Distance to Forest Edge",
+    x = "Distance to forest edge (m)",
+    y = "Occupancy (0 = no, 1 = yes)"
+  ) +
+  theme_minimal()
+
+
+```
 
 
 #### a. Response variable 
@@ -228,7 +298,33 @@ The authors compared the years 2016 and 2019, as the Swift Parrots were absent f
 
 #### e. Run the models 
 
+```{r}
+#| echo: false
+#| message: false
 
+# model 0: null model
+model0 <- glm(swift_parrot ~ 1, # formula: the 1 represents no predictors 
+              data = nest_clean, # dataframe 
+              family = "binomial") # distribution
+
+# model 1: all predictor variables
+model1 <- glm(swift_parrot ~ edge_distance + season, # formula: (response variable ~ predictor) 
+              data = nest_clean, # dataframe
+              family = "binomial") # distribution
+
+# model 2: distance of forest edge as the predictor
+model2 <- glm(swift_parrot ~ edge_distance, # formula: (response variable ~ predictor
+              data = nest_clean, # dataframe
+              family = "binomial") # distribution
+
+
+# model 3: season as the predictor
+model3 <- glm(swift_parrot ~ edge_distance, # formula: (response variable ~ predictor
+              data = nest_clean, # dataframe
+              family = "binomial") # distribution
+
+
+```
 
 
 #### f. Check the diagnostics
@@ -287,7 +383,7 @@ During week 9 in workshop the type of feedback that I received focused on the ra
 
 #### b. Sharing your affective visualization 
 
-
+Completed during workshop in week 10.   
 
 
 

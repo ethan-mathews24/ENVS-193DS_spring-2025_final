@@ -216,11 +216,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   year  month mean_monthly_sst
   &lt;fct&gt; &lt;ord&gt;            &lt;dbl&gt;
-1 2019  May               14.3
-2 2022  Jun               16.2
-3 2020  Sep               18.7
-4 2019  Mar               13.6
-5 2021  Feb               13.1</code></pre>
+1 2019  Dec               15  
+2 2018  May               13.6
+3 2018  Mar               13.5
+4 2021  Nov               15.8
+5 2023  Mar               12.8</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -284,68 +284,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="problem-3.-data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="problem-3.-data-analysis">Problem 3. Data Analysis</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nest_clean <span class="ot">&lt;-</span> nest_boxes <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"swift_parrot"</span> <span class="ot">=</span> <span class="st">"sp"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">"common_starling"</span> <span class="ot">=</span> <span class="st">"cs"</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"unoccupied"</span> <span class="ot">=</span> <span class="st">"e"</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">"tree_martin"</span> <span class="ot">=</span> <span class="st">"tm"</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">|&gt;</span> </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>box, <span class="sc">-</span>event_id, <span class="sc">-</span>repeated_use) <span class="sc">|&gt;</span> </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">season =</span> <span class="fu">as.factor</span>(season)) <span class="sc">|&gt;</span> </span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">swift_parrot =</span> <span class="fu">as.numeric</span>(swift_parrot),</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">common_starling =</span> <span class="fu">as.numeric</span>(common_starling),</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">unoccupied =</span> <span class="fu">as.numeric</span>(unoccupied),</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">tree_martin =</span> <span class="fu">as.numeric</span>(tree_martin)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(swift_parrot, common_starling, unoccupied, tree_martin),</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"species"</span>,</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"occupancy"</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>nest_clean <span class="sc">|&gt;</span> </span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 5
-  box_occupant    edge_distance season species         occupancy
-  &lt;chr&gt;                   &lt;int&gt; &lt;fct&gt;  &lt;chr&gt;               &lt;dbl&gt;
-1 common starling           128 2019   tree_martin             0
-2 common starling           160 2019   unoccupied              0
-3 common starling             7 2019   common_starling         1
-4 common starling           135 2019   common_starling         1
-5 empty                     778 2016   unoccupied              1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(nest_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>tibble [908 × 5] (S3: tbl_df/tbl/data.frame)
- $ box_occupant : chr [1:908] "common starling" "common starling" "common starling" "common starling" ...
- $ edge_distance: int [1:908] 287 287 287 287 35 35 35 35 84 84 ...
- $ season       : Factor w/ 2 levels "2016","2019": 1 1 1 1 1 1 1 1 1 1 ...
- $ species      : chr [1:908] "swift_parrot" "common_starling" "unoccupied" "tree_martin" ...
- $ occupancy    : num [1:908] 0 1 0 0 0 1 0 0 0 1 ...</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nest_clean,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> season,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> edge_distance)) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">height =</span> <span class="dv">0</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">shape =</span> <span class="dv">21</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ENVS-193DS_spring-2025_final_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
 <section id="a.-response-variable" class="level4">
 <h4 class="anchored" data-anchor-id="a.-response-variable">a. Response variable</h4>
 <p>The 1s and 0s in this dataset are binary representations of whether a particular nest box observation was occupied by a specific species or was empty. For each occupancy type (Swift Parrot, Common Starling, Tree Martin, or empty), a 1 means that category was present in that observation, while a 0 means it was not.”</p>
@@ -404,6 +342,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="b.-sharing-your-affective-visualization" class="level4">
 <h4 class="anchored" data-anchor-id="b.-sharing-your-affective-visualization">b. Sharing your affective visualization</h4>
+<p>Completed during workshop in week 10.</p>
 </section>
 </section>
 
