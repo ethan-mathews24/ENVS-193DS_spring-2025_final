@@ -290,7 +290,7 @@ The authors compared the years 2016 and 2019, as the Swift Parrots were absent f
 
 #### e. Run the models 
 
-```{r}
+```{r model-fitting}
 #| echo: false
 #| message: false
 
@@ -321,7 +321,7 @@ model3 <- glm(swift_parrot ~ season, # formula: (response variable ~ predictor
 
 #### f. Check the diagnostics
 
-```{r}
+```{r model-diagnostics}
 
 plot(
   simulateResiduals(model0))
@@ -341,7 +341,7 @@ plot(
 
 #### g. Select the best model 
 
-```{r}
+```{r model-selection}
 
 AICc(
   model0,
@@ -359,7 +359,69 @@ The best model, as determined by Akaike’s Information Criterion (AIC), was the
 
 #### h. Visualize the model predictions 
 
+```{r visualizing-models}
 
+# model predictions for model1
+model1_predictions <- ggpredict(model1, # naming the model 
+                                 terms = c("edge_distance [all]", "season")) |> # naming the predictors in the model
+  
+  rename(edge_distance = x, 
+         season = group)
+
+
+# creating the visual 
+ggplot(data = nest_clean, # data being used 
+       aes(x = edge_distance, # setting x-axis
+           y = swift_parrot, # setting y-axis
+           color = season)) + # distinguishing the color by season
+
+  # first layer: points to show underlying data
+  geom_point(data = nest_clean, # underlying data points 
+             size = 2, # changing size
+             alpha = 0.4) + # changing transparency
+ 
+  # second layer: display ribbon of 95% CI 
+  geom_ribbon(data = model1_predictions, # data from ggpredict 
+              aes(
+                  y = predicted, # assigning the y-axis
+                  ymin = conf.low, # seting the bottom edge of the ribbon
+                  ymax = conf.high, # setting the top edge of the ribbon
+                  fill = season), # filling based on season 
+              alpha = 0.4, # adding transparency
+              color = NA) + # removing outline of the ribbon
+  
+  # third layer: model prediction lines
+  geom_line(data = model1_predictions, # data from ggpredict
+            aes(y = predicted, # setting y-axis
+                color = season), # setting x-axis
+            size = 1) + # changing color
+  
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = c(0, 1)) + # setting y axis with a limit from 0 to 1 with only 0 and 1 being labeled
+  
+  scale_color_manual(values = c("2016" = "deepskyblue",
+                                "2019" = "firebrick2")) + # adding colors to outline 
+  
+  scale_fill_manual(values = c("2016" = "deepskyblue",
+                               "2019" = "firebrick2")) + # adding fill colors 
+  
+  theme_bw() + # template plot
+  
+  theme(panel.background = element_rect(fill = "white"), # changing the background color
+  panel.grid.major = element_line(color = NA), # removing the color to the grid lines
+  panel.grid.minor = element_line(color = NA), # removing the color to the grid lines
+  axis.title.x = element_text(size = 10),  # changing size of x axis title
+  axis.title.y = element_text(size = 10), # changing size of y axis title
+  plot.title = element_text(size = 11)) +  # changin legend title size  
+
+  labs(title = "Model Predictions of Swift Parrot Presence in November to December", # changing title
+       y = "Probability of Swift Parrot Occupancy", # changing y-axis title
+       x = "Distance from Forest Edge (meters)", # changing x-axis title
+       color = "Year", # changing legend title
+       fill = "Year") # changing legend title
+
+
+```
 
 
 #### i. Write a caption for your figure 
