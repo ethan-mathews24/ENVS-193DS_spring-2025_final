@@ -21,9 +21,9 @@ library(here) # file organization
 
 library(readxl) # reading excel files 
 
-library(dplyr) # enables dataframe manipulation
+library(MuMIn) # model selection
 
-library(tidyr) # help organize data
+library(DHARMa) # to check diagnostics from the model
 
 library(fs) # allows you to make a tree of the data structure
 

@@ -1,7 +1,7 @@
 ---
 title: "ENVS-193DS_spring-2025_final"
 author: "Ethan Mathews"
-date: "2025-06-01"
+date: "2025-06-11"
 format:
   html:
     toc: true 
@@ -20,8 +20,6 @@ library(gt) # creating summary tables
 library(janitor) # cleaning data frames 
 library(here) # file organization
 library(readxl) # reading excel files
-library(dplyr)
-library(tidyr)
 library(ggeffects) # getting model predictions
 library(MuMIn) # model selection
 library(DHARMa) # to check diagnostics from the model
@@ -168,7 +166,7 @@ nest_clean <- nest_boxes |>
 
   
 nest_clean |> 
-  slice_sample(n=5)
+  slice_sample(n = 5)
 
 str(nest_clean)
 
@@ -323,7 +321,6 @@ model3 <- glm(swift_parrot ~ season, # formula: (response variable ~ predictor
 
 #### f. Check the diagnostics
 
-
 ```{r}
 
 plot(
@@ -344,7 +341,20 @@ plot(
 
 #### g. Select the best model 
 
+```{r}
 
+AICc(
+  model0,
+  model1,
+  model2,
+  model3
+) |> 
+  arrange(AICc)
+
+
+```
+
+The best model, as determined by Akaike’s Information Criterion (AIC), was the one that included both predictor variables, season and edge distance, as it had the lowest AICc value compared to the other models. 
 
 
 #### h. Visualize the model predictions 
