@@ -16,23 +16,15 @@ link to GitHub repository: https://github.com/ethan-mathews24/ENVS-193DS_spring-
 
 # Reading in Packages
 library(tidyverse) # general use 
-
 library(gt) # creating summary tables
-
 library(janitor) # cleaning data frames 
-
 library(here) # file organization
-
 library(readxl) # reading excel files
-
 library(dplyr)
-
 library(tidyr)
-
 library(ggeffects) # getting model predictions
-
 library(MuMIn) # model selection
-
+library(DHARMa) # to check diagnostics from the model
 library(fs) # fs::dir_tree(path = ".", recurse = TRUE) in console to get file structure 
 
 # reading in datasets
@@ -105,6 +97,8 @@ str(sst_clean)
 #### b. Visualize the data 
 
 ```{r}
+#| fig-height: 5
+#| fig-width: 8
 
 ggplot(data = sst_clean, # using cleaned dataframe
        aes(x = month, # assigning the x-axis
@@ -272,12 +266,12 @@ ggplot(data = nest_clean,
 
 #### a. Response variable 
 
-The 1s and 0s in this dataset are binary representations of whether a particular nest box observation was occupied by a specific species or was empty. For each occupancy type (Swift Parrot, Common Starling, Tree Martin, or empty), a 1 means that category was present in that observation, while a 0 means it was not.”
+The 1s and 0s in this dataset are binary representations of whether a particular nest box observation was occupied by a specific species or was empty. For each occupancy type (Swift Parrot, Common Starling, Tree Martin, or empty), a 1 means that category was present in that observation, while a 0 means it was not.
 
 
 #### b. Purpose of study 
 
-The Swift Parrots are the critically endangered target species for conservation efforts with these nest boxes, whereas Common Starlings and Tree Martins are competitor species that also use these boxes but can outcompete or displace the Swift Parrots. While the Swift Parrots are at imminent risk of extinction due to deforestation and the introduction of predators, the other species are more adaptable and, if not managed properly, can exploit the new habitat resources provided by the boxes.
+The Swift Parrots are the critically endangered target species for conservation efforts with these nest boxes, whereas Common Starlings and Tree Martins are species that also use these boxes and can compete for resources, leading to the displacement of the Swift Parrots. While the Swift Parrots are at imminent risk of extinction due to deforestation and the introduction of predators, the other species are more adaptable and, if not managed properly, can exploit the new habitat resources provided by the boxes.
 
 
 #### c. Difference in "seasons"
@@ -319,7 +313,7 @@ model2 <- glm(swift_parrot ~ edge_distance, # formula: (response variable ~ pred
 
 
 # model 3: season as the predictor
-model3 <- glm(swift_parrot ~ edge_distance, # formula: (response variable ~ predictor
+model3 <- glm(swift_parrot ~ season, # formula: (response variable ~ predictor
               data = nest_clean, # dataframe
               family = "binomial") # distribution
 
@@ -330,6 +324,22 @@ model3 <- glm(swift_parrot ~ edge_distance, # formula: (response variable ~ pred
 #### f. Check the diagnostics
 
 
+```{r}
+
+plot(
+  simulateResiduals(model0))
+
+plot(
+  simulateResiduals(model1))
+
+plot(
+  simulateResiduals(model2))
+
+plot(
+  simulateResiduals(model3))
+
+
+```
 
 
 #### g. Select the best model 
