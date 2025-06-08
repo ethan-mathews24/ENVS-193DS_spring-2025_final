@@ -206,11 +206,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   year  month mean_monthly_sst
   &lt;fct&gt; &lt;ord&gt;            &lt;dbl&gt;
-1 2021  Mar               12.6
-2 2021  Jun               15.9
-3 2020  Dec               14.5
-4 2022  Mar               13.3
-5 2018  Nov               17.9</code></pre>
+1 2022  Apr               13.3
+2 2018  Nov               17.9
+3 2018  Feb               14.3
+4 2018  May               13.6
+5 2020  Jan               14.6</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -369,61 +369,58 @@ model0  1 238.8318</code></pre>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">edge_distance =</span> x, </span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">season =</span> group)</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># creating the visual </span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nest_clean, <span class="co"># data being used </span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> edge_distance, <span class="co"># setting x-axis</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> swift_parrot, <span class="co"># setting y-axis</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> season)) <span class="sc">+</span> <span class="co"># distinguishing the color by season</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points to show underlying data</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> nest_clean, <span class="co"># underlying data points </span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>, <span class="co"># changing size</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> <span class="co"># changing transparency</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: display ribbon of 95% CI </span></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> model1_predictions, <span class="co"># data from ggpredict </span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> predicted, <span class="co"># assigning the y-axis</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymin =</span> conf.low, <span class="co"># seting the bottom edge of the ribbon</span></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> conf.high, <span class="co"># setting the top edge of the ribbon</span></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> season), <span class="co"># filling based on season </span></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="co"># adding transparency</span></span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span> <span class="co"># removing outline of the ribbon</span></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># third layer: model prediction lines</span></span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> model1_predictions, <span class="co"># data from ggpredict</span></span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> predicted, <span class="co"># setting y-axis</span></span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> season), <span class="co"># setting x-axis</span></span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co"># changing color</span></span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># setting y axis with a limit from 0 to 1 with only 0 and 1 being labeled</span></span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2016"</span> <span class="ot">=</span> <span class="st">"deepskyblue"</span>,</span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"2019"</span> <span class="ot">=</span> <span class="st">"firebrick2"</span>)) <span class="sc">+</span> <span class="co"># adding colors to outline </span></span>
-<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2016"</span> <span class="ot">=</span> <span class="st">"deepskyblue"</span>,</span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2019"</span> <span class="ot">=</span> <span class="st">"firebrick2"</span>)) <span class="sc">+</span> <span class="co"># adding fill colors </span></span>
-<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># template plot</span></span>
-<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>), <span class="co"># changing the background color</span></span>
-<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
-<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
-<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),  <span class="co"># changing size of x axis title</span></span>
-<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), <span class="co"># changing size of y axis title</span></span>
-<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>)) <span class="sc">+</span>  <span class="co"># changin legend title size  </span></span>
-<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Model Predictions of Swift Parrot Presence in November to December"</span>, <span class="co"># changing title</span></span>
-<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Probability of Swift Parrot Occupancy"</span>, <span class="co"># changing y-axis title</span></span>
-<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Distance from Forest Edge (meters)"</span>, <span class="co"># changing x-axis title</span></span>
-<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Year"</span>, <span class="co"># changing legend title</span></span>
-<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Year"</span>) <span class="co"># changing legend title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-</div>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># creating the visual </span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nest_clean, <span class="co"># data being used </span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> edge_distance, <span class="co"># setting x-axis</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> swift_parrot, <span class="co"># setting y-axis</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> season)) <span class="sc">+</span> <span class="co"># distinguishing the color by season</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points to show underlying data</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> nest_clean, <span class="co"># underlying data points </span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>, <span class="co"># changing size</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> <span class="co"># changing transparency</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: display ribbon of 95% CI </span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> model1_predictions, <span class="co"># data from ggpredict </span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> predicted, <span class="co"># assigning the y-axis</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymin =</span> conf.low, <span class="co"># seting the bottom edge of the ribbon</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> conf.high, <span class="co"># setting the top edge of the ribbon</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> season), <span class="co"># filling based on season </span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="co"># adding transparency</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span> <span class="co"># removing outline of the ribbon</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># third layer: model prediction lines</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> model1_predictions, <span class="co"># data from ggpredict</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> predicted, <span class="co"># setting y-axis</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> season), <span class="co"># setting x-axis</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co"># changing size</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="co"># setting y axis with a limit from 0 to 1</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># setting y axis to only label 0 and 1 </span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2016"</span> <span class="ot">=</span> <span class="st">"deepskyblue"</span>,</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"2019"</span> <span class="ot">=</span> <span class="st">"firebrick2"</span>)) <span class="sc">+</span> <span class="co"># adding colors to outline </span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2016"</span> <span class="ot">=</span> <span class="st">"deepskyblue"</span>,</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2019"</span> <span class="ot">=</span> <span class="st">"firebrick2"</span>)) <span class="sc">+</span> <span class="co"># adding fill colors </span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># template plot</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>), <span class="co"># changing the background color</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),  <span class="co"># changing size of x axis title</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), <span class="co"># changing size of y axis title</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>), <span class="co"># # changing legend title size</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>)  <span class="co"># outline for legend</span></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span>    </span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Model Predictions of Swift Parrot Presence in November to December"</span>, <span class="co"># changing title</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Probability of Swift Parrot Occupancy"</span>, <span class="co"># changing y-axis title</span></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Distance from Forest Edge (meters)"</span>, <span class="co"># changing x-axis title</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Year"</span>, <span class="co"># changing legend title</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Year"</span>) <span class="co"># changing legend title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -435,6 +432,7 @@ model0  1 238.8318</code></pre>
 </section>
 <section id="i.-write-a-caption-for-your-figure" class="level4">
 <h4 class="anchored" data-anchor-id="i.-write-a-caption-for-your-figure">i. Write a caption for your figure</h4>
+<p><strong>Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.</strong> Data from <em>Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird</em> (Stojanovic, D. et al.&nbsp;2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019)</p>
 </section>
 <section id="j.-calculate-model-predictions" class="level4">
 <h4 class="anchored" data-anchor-id="j.-calculate-model-predictions">j. Calculate model predictions</h4>

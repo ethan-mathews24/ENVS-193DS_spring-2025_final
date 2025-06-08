@@ -360,6 +360,8 @@ The best model, as determined by Akaike’s Information Criterion (AIC), was the
 #### h. Visualize the model predictions 
 
 ```{r visualizing-models}
+#| fig-height: 5
+#| fig-width: 8
 
 # model predictions for model1
 model1_predictions <- ggpredict(model1, # naming the model 
@@ -367,7 +369,6 @@ model1_predictions <- ggpredict(model1, # naming the model
   
   rename(edge_distance = x, 
          season = group)
-
 
 # creating the visual 
 ggplot(data = nest_clean, # data being used 
@@ -394,10 +395,10 @@ ggplot(data = nest_clean, # data being used
   geom_line(data = model1_predictions, # data from ggpredict
             aes(y = predicted, # setting y-axis
                 color = season), # setting x-axis
-            size = 1) + # changing color
+            linewidth = 1) + # changing size
   
-  scale_y_continuous(limits = c(0, 1),
-                     breaks = c(0, 1)) + # setting y axis with a limit from 0 to 1 with only 0 and 1 being labeled
+  scale_y_continuous(limits = c(0, 1), # setting y axis with a limit from 0 to 1
+                     breaks = c(0, 1)) + # setting y axis to only label 0 and 1 
   
   scale_color_manual(values = c("2016" = "deepskyblue",
                                 "2019" = "firebrick2")) + # adding colors to outline 
@@ -412,7 +413,9 @@ ggplot(data = nest_clean, # data being used
   panel.grid.minor = element_line(color = NA), # removing the color to the grid lines
   axis.title.x = element_text(size = 10),  # changing size of x axis title
   axis.title.y = element_text(size = 10), # changing size of y axis title
-  plot.title = element_text(size = 11)) +  # changin legend title size  
+  plot.title = element_text(size = 11), # # changing legend title size
+  legend.background = element_rect(color = "black", linewidth = 0.2)  # outline for legend
+) +    
 
   labs(title = "Model Predictions of Swift Parrot Presence in November to December", # changing title
        y = "Probability of Swift Parrot Occupancy", # changing y-axis title
@@ -426,7 +429,21 @@ ggplot(data = nest_clean, # data being used
 
 #### i. Write a caption for your figure 
 
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| results: "hide"
+#| fig.show: "hide"
 
+nest_clean %>%
+  group_by(season) %>%
+  summarize(n = n())
+
+```
+
+
+**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic, D. et al. 2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019) 
 
 
 #### j. Calculate model predictions 
