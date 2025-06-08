@@ -47,8 +47,25 @@ Stojanovic, Dejan et al. (2021). Do nest boxes breed the target species or its c
 File Structure: 
 
 ```
-
-
+├── ENVS-193DS_spring-2025_final.Rproj
+├── README.md
+├── code
+│   ├── ENVS-193DS_spring-2025_final.html
+│   ├── ENVS-193DS_spring-2025_final.qmd
+│   └── ENVS-193DS_spring-2025_final_files
+│       ├── figure-html
+│       └── libs
+│           ├── bootstrap
+│           │   ├── bootstrap-icons.css
+│           │   ├── bootstrap-icons.woff
+│           │   ├── bootstrap.min.css
+│           │   └── bootstrap.min.js
+│           ├── clipboard
+│           │   └── clipboard.min.js
+│           └── quarto-html
+└── data
+    ├── SST_update.csv
+    └── occdist.csv
 
 ```
 

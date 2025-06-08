@@ -129,8 +129,8 @@ ggplot(data = sst_clean, # using cleaned dataframe
   theme(panel.background = element_rect(fill = "white"), # changing the background color
   panel.grid.major = element_line(color = NA), # removing the color to the grid lines
   panel.grid.minor = element_line(color = NA), # removing the color to the grid lines
-  axis.title.x = element_text(size = 10),  # changing size of x axis title
-  axis.title.y = element_text(size = 10), # changing size of y axis title
+  axis.title.x = element_text(size = 12),  # changing size of x axis title
+  axis.title.y = element_text(size = 12), # changing size of y axis title
   legend.position = "inside", # moving the legend to be inside of the figure 
   legend.position.inside = c(0.1, 0.75) # changing the position of the legend to be inside the graph by treating it as (x,y) coordinates 
 )
@@ -441,14 +441,49 @@ nest_clean %>%
   summarize(n = n())
 
 ```
-
-
 **Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic, D. et al. 2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019) 
 
 
 #### j. Calculate model predictions 
 
+```{r calculate-model-predictions}
 
+# looking at model predictions
+model1_predict_edge_season <- ggpredict(model1, # creating new object
+                                 terms = c("edge_distance [0, 900]", "season")) # selecting parameters
+
+
+model1_predict_edge_season_df <- as.data.frame(model1_predict_edge_season) # Convert ggpredict object to data frame
+
+
+model1_predict_edge_season_df |> # starting dataframe
+  select(Year = group,
+         Distance_meters = x,
+         Predicted_Probability = predicted,
+         Lower_95_CI = conf.low,
+         Upper_95_CI = conf.high) |> # rename and reorder the columns
+ 
+  # creating summary table for model output 
+   gt() |> 
+  tab_header(
+    title = "Table 1. Summary Table of Predicted Swift Parrot Occupancy Probability", # adding title
+    subtitle = "At 0 meters and 900 meters from forest edge" # adding subtitle
+  ) |> 
+  cols_label(
+    Year = "Year",
+    Distance_meters = "Distance (meters)",
+    Predicted_Probability = "Predicted Probability",
+    Lower_95_CI = "95% Confidence Interval (Lower)",
+    Upper_95_CI = "95% Confidence Interval (Upper)" # changing the column names in the table 
+  ) |> 
+  fmt_number(
+    columns = c(Predicted_Probability, Lower_95_CI, Upper_95_CI),
+    decimals = 3) |> # rounding off the decimals
+  tab_options(
+    heading.align = "left")  # move title and subtitle to the left
+
+
+```
 
 
 #### k. Interpret the results 
