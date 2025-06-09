@@ -39,16 +39,20 @@ nest_boxes <- read.csv(here("data", "occdist.csv"))
 
 #### a. Transparent statistical methods 
 
-
+In part 1, the authors used a Pearson’s correlation test because they wanted to determine the **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, the authors used a one-way ANOVA to compare the differences in **average** (mean) nitrogen loads between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands). 
 
 
 #### b. More information needed
 
-
+An additional test that would provide more context is Tukey’s Honestly Significant Difference (HSD) test, which would identify exactly which pairs of sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands) have significantly different nitrogen loads. This test is valuable because it adjusts for multiple comparisons and helps avoid a Type I error that could arise from comparing multiple groups. Another useful piece of information would be to calculate an effect size measure, such as eta-squared (η²), to determine the magnitude of the differences between group means. This would provide insight into whether statistically significant differences in nitrogen loads also have practical importance for understanding the sources of agricultural runoff.  
 
 
 #### c. Suggestions for rewriting 
 
+Part 1: The authors found that there is a positive relationship between the distance from the headwater and the annual total nitrogen load (Pearson’s correlation, test statistic(degrees of freedom), p = 0.03, α = significance level), indicating that nitrogen load tends to increase downstream. 
+
+
+Part 2: The authors found a negligible difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, distribution(among groups degrees of freedom, within groups degrees of freedom) = test statistic, p = 0.02, α = significance level), indicating that between the different source that were tested, the average nitrogen load did not differ enough to produce significant results. 
 
 
 
@@ -71,7 +75,7 @@ sst_clean <- sst |> # starting dataframe
   select(-date) |>  # removing the original date column 
   group_by(year, month) |> # grouping by year and month 
   summarize(mean_monthly_sst = mean(temp, na.rm = TRUE), # calculating the mean of the surface temp
-            .groups = "drop") |>  
+            .groups = "drop") |>  # making sure the result is not a grouped data frame
   mutate( 
     mean_monthly_sst = round(mean_monthly_sst, 1), # rounding the mean_monthly_sst to one decimal place
     year = as.factor(year)) # making sure the years are seen as a factor
@@ -394,7 +398,8 @@ ggplot(data = nest_clean, # data being used
   # third layer: model prediction lines
   geom_line(data = model1_predictions, # data from ggpredict
             aes(y = predicted, # setting y-axis
-                color = season), # setting x-axis
+                x = edge_distance, # setting x-axis
+                color = season), # assigning color by season
             linewidth = 1) + # changing size
   
   scale_y_continuous(limits = c(0, 1), # setting y axis with a limit from 0 to 1
@@ -518,10 +523,6 @@ During week 9 in workshop the type of feedback that I received focused on the ra
 #### b. Sharing your affective visualization 
 
 Completed during workshop in week 10.   
-
-
-
-
 
 
 

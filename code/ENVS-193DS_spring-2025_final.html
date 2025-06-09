@@ -169,12 +169,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="problem-1.-research-writing">Problem 1. Research writing</h2>
 <section id="a.-transparent-statistical-methods" class="level4">
 <h4 class="anchored" data-anchor-id="a.-transparent-statistical-methods">a. Transparent statistical methods</h4>
+<p>In part 1, the authors used a Pearson’s correlation test because they wanted to determine the <strong>relationship</strong> (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, the authors used a one-way ANOVA to compare the differences in <strong>average</strong> (mean) nitrogen loads between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).</p>
 </section>
 <section id="b.-more-information-needed" class="level4">
 <h4 class="anchored" data-anchor-id="b.-more-information-needed">b. More information needed</h4>
+<p>An additional test that would provide more context is Tukey’s Honestly Significant Difference (HSD) test, which would identify exactly which pairs of sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands) have significantly different nitrogen loads. This test is valuable because it adjusts for multiple comparisons and helps avoid a Type I error that could arise from comparing multiple groups. Another useful piece of information would be to calculate an effect size measure, such as eta-squared (η²), to determine the magnitude of the differences between group means. This would provide insight into whether statistically significant differences in nitrogen loads also have practical importance for understanding the sources of agricultural runoff.</p>
 </section>
 <section id="c.-suggestions-for-rewriting" class="level4">
 <h4 class="anchored" data-anchor-id="c.-suggestions-for-rewriting">c.&nbsp;Suggestions for rewriting</h4>
+<p>Part 1: The authors found that there is a positive relationship between the distance from the headwater and the annual total nitrogen load (Pearson’s correlation, test statistic(degrees of freedom), p = 0.03, α = significance level), indicating that nitrogen load tends to increase downstream.</p>
+<p>Part 2: The authors found a small difference (η² = eta squared) between sources in average nitrogen load (kg year-1) (one-way ANOVA, test statistic(degrees of freedom) = test statistic, p - 0.03, α = significance level).</p>
 </section>
 </section>
 <section id="problem-2.-data-visualization" class="level2">
@@ -194,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>date) <span class="sc">|&gt;</span>  <span class="co"># removing the original date column </span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month) <span class="sc">|&gt;</span> <span class="co"># grouping by year and month </span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_monthly_sst =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># calculating the mean of the surface temp</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span>  <span class="co"># making sure the result is not a grouped data frame</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( </span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_monthly_sst =</span> <span class="fu">round</span>(mean_monthly_sst, <span class="dv">1</span>), <span class="co"># rounding the mean_monthly_sst to one decimal place</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">as.factor</span>(year)) <span class="co"># making sure the years are seen as a factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -206,11 +210,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   year  month mean_monthly_sst
   &lt;fct&gt; &lt;ord&gt;            &lt;dbl&gt;
-1 2021  May               14.4
-2 2020  Jul               17  
-3 2022  Aug               17.5
-4 2018  Jun               15.5
-5 2021  Jun               15.9</code></pre>
+1 2020  Aug               17.8
+2 2021  Dec               14.4
+3 2020  Nov               15.5
+4 2018  Jan               15  
+5 2022  Oct               17.9</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -257,8 +261,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>), <span class="co"># changing the background color</span></span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),  <span class="co"># changing size of x axis title</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), <span class="co"># changing size of y axis title</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),  <span class="co"># changing size of x axis title</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>), <span class="co"># changing size of y axis title</span></span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="co"># moving the legend to be inside of the figure </span></span>
 <span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.75</span>) <span class="co"># changing the position of the legend to be inside the graph by treating it as (x,y) coordinates </span></span>
 <span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -471,23 +475,23 @@ model0  1 238.8318</code></pre>
 <span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(</span>
 <span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">heading.align =</span> <span class="st">"left"</span>)  <span class="co"># move title and subtitle to the left</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="rzobwcduya" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rzobwcduya table {
+<div id="wfymqgvzhf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wfymqgvzhf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rzobwcduya thead, #rzobwcduya tbody, #rzobwcduya tfoot, #rzobwcduya tr, #rzobwcduya td, #rzobwcduya th {
+#wfymqgvzhf thead, #wfymqgvzhf tbody, #wfymqgvzhf tfoot, #wfymqgvzhf tr, #wfymqgvzhf td, #wfymqgvzhf th {
   border-style: none;
 }
 
-#rzobwcduya p {
+#wfymqgvzhf p {
   margin: 0;
   padding: 0;
 }
 
-#rzobwcduya .gt_table {
+#wfymqgvzhf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -513,12 +517,12 @@ model0  1 238.8318</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_caption {
+#wfymqgvzhf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rzobwcduya .gt_title {
+#wfymqgvzhf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -530,7 +534,7 @@ model0  1 238.8318</code></pre>
   border-bottom-width: 0;
 }
 
-#rzobwcduya .gt_subtitle {
+#wfymqgvzhf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -542,7 +546,7 @@ model0  1 238.8318</code></pre>
   border-top-width: 0;
 }
 
-#rzobwcduya .gt_heading {
+#wfymqgvzhf .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -554,13 +558,13 @@ model0  1 238.8318</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_bottom_border {
+#wfymqgvzhf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_col_headings {
+#wfymqgvzhf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -575,7 +579,7 @@ model0  1 238.8318</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_col_heading {
+#wfymqgvzhf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -595,7 +599,7 @@ model0  1 238.8318</code></pre>
   overflow-x: hidden;
 }
 
-#rzobwcduya .gt_column_spanner_outer {
+#wfymqgvzhf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -607,15 +611,15 @@ model0  1 238.8318</code></pre>
   padding-right: 4px;
 }
 
-#rzobwcduya .gt_column_spanner_outer:first-child {
+#wfymqgvzhf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rzobwcduya .gt_column_spanner_outer:last-child {
+#wfymqgvzhf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rzobwcduya .gt_column_spanner {
+#wfymqgvzhf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -627,11 +631,11 @@ model0  1 238.8318</code></pre>
   width: 100%;
 }
 
-#rzobwcduya .gt_spanner_row {
+#wfymqgvzhf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rzobwcduya .gt_group_heading {
+#wfymqgvzhf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -657,7 +661,7 @@ model0  1 238.8318</code></pre>
   text-align: left;
 }
 
-#rzobwcduya .gt_empty_group_heading {
+#wfymqgvzhf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -672,15 +676,15 @@ model0  1 238.8318</code></pre>
   vertical-align: middle;
 }
 
-#rzobwcduya .gt_from_md > :first-child {
+#wfymqgvzhf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rzobwcduya .gt_from_md > :last-child {
+#wfymqgvzhf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rzobwcduya .gt_row {
+#wfymqgvzhf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -699,7 +703,7 @@ model0  1 238.8318</code></pre>
   overflow-x: hidden;
 }
 
-#rzobwcduya .gt_stub {
+#wfymqgvzhf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -712,7 +716,7 @@ model0  1 238.8318</code></pre>
   padding-right: 5px;
 }
 
-#rzobwcduya .gt_stub_row_group {
+#wfymqgvzhf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -726,15 +730,15 @@ model0  1 238.8318</code></pre>
   vertical-align: top;
 }
 
-#rzobwcduya .gt_row_group_first td {
+#wfymqgvzhf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rzobwcduya .gt_row_group_first th {
+#wfymqgvzhf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rzobwcduya .gt_summary_row {
+#wfymqgvzhf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -744,16 +748,16 @@ model0  1 238.8318</code></pre>
   padding-right: 5px;
 }
 
-#rzobwcduya .gt_first_summary_row {
+#wfymqgvzhf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_first_summary_row.thick {
+#wfymqgvzhf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rzobwcduya .gt_last_summary_row {
+#wfymqgvzhf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -763,7 +767,7 @@ model0  1 238.8318</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_grand_summary_row {
+#wfymqgvzhf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -773,7 +777,7 @@ model0  1 238.8318</code></pre>
   padding-right: 5px;
 }
 
-#rzobwcduya .gt_first_grand_summary_row {
+#wfymqgvzhf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -783,7 +787,7 @@ model0  1 238.8318</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_last_grand_summary_row_top {
+#wfymqgvzhf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -793,11 +797,11 @@ model0  1 238.8318</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_striped {
+#wfymqgvzhf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rzobwcduya .gt_table_body {
+#wfymqgvzhf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -806,7 +810,7 @@ model0  1 238.8318</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_footnotes {
+#wfymqgvzhf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -820,7 +824,7 @@ model0  1 238.8318</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_footnote {
+#wfymqgvzhf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -829,7 +833,7 @@ model0  1 238.8318</code></pre>
   padding-right: 5px;
 }
 
-#rzobwcduya .gt_sourcenotes {
+#wfymqgvzhf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -843,7 +847,7 @@ model0  1 238.8318</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rzobwcduya .gt_sourcenote {
+#wfymqgvzhf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -851,72 +855,72 @@ model0  1 238.8318</code></pre>
   padding-right: 5px;
 }
 
-#rzobwcduya .gt_left {
+#wfymqgvzhf .gt_left {
   text-align: left;
 }
 
-#rzobwcduya .gt_center {
+#wfymqgvzhf .gt_center {
   text-align: center;
 }
 
-#rzobwcduya .gt_right {
+#wfymqgvzhf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rzobwcduya .gt_font_normal {
+#wfymqgvzhf .gt_font_normal {
   font-weight: normal;
 }
 
-#rzobwcduya .gt_font_bold {
+#wfymqgvzhf .gt_font_bold {
   font-weight: bold;
 }
 
-#rzobwcduya .gt_font_italic {
+#wfymqgvzhf .gt_font_italic {
   font-style: italic;
 }
 
-#rzobwcduya .gt_super {
+#wfymqgvzhf .gt_super {
   font-size: 65%;
 }
 
-#rzobwcduya .gt_footnote_marks {
+#wfymqgvzhf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rzobwcduya .gt_asterisk {
+#wfymqgvzhf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rzobwcduya .gt_indent_1 {
+#wfymqgvzhf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rzobwcduya .gt_indent_2 {
+#wfymqgvzhf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rzobwcduya .gt_indent_3 {
+#wfymqgvzhf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rzobwcduya .gt_indent_4 {
+#wfymqgvzhf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rzobwcduya .gt_indent_5 {
+#wfymqgvzhf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rzobwcduya .katex-display {
+#wfymqgvzhf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rzobwcduya div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wfymqgvzhf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -975,6 +979,7 @@ model0  1 238.8318</code></pre>
 </section>
 <section id="k.-interpret-the-results" class="level4">
 <h4 class="anchored" data-anchor-id="k.-interpret-the-results">k. Interpret the results</h4>
+<p>Our model predicts that Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: 0.33, 0.64) and 0.30 in 2019 (95% CI: 0.19, 0.44). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.13 (95% CI: 0.06, 0.24) in 2016 and 0.06 (95% CI: 0.03, 0.13) in 2019 (see Table 1). This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that may displace Swift Parrots to edge habitats (Stojanovic et al., 2021).</p>
 </section>
 </section>
 <section id="problem-4.-affective-and-exploratory-visualizations" class="level2">
