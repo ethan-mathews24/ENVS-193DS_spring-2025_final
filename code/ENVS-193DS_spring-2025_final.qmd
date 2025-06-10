@@ -36,17 +36,17 @@ nest_boxes <- read.csv(here("data", "occdist.csv"))
 
 #### a. Transparent statistical methods
 
-In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine the **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the differences in **average** (mean) nitrogen loads between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).
+In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the significant differences in **average** (mean) nitrogen loads (kg year<sup>−1</sup>) between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).
 
 #### b. More information needed
 
-An additional test that would provide more context in part 2 of the study is Tukey’s Honestly Significant Difference (HSD) test, which would identify exactly which pairs of sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands) have significantly different nitrogen loads. This test is valuable because it adjusts for multiple comparisons and helps avoid a Type I error that could arise from comparing multiple groups. Another useful piece of information would be to calculate an effect size measure, such as eta-squared (η²), to determine how much that grouping variables explain the response variables. This would provide insight into whether statistically significant differences in nitrogen loads also have practical importance for understanding the sources of agricultural runoff.
+An additional test that would provide more context in part 2 of the study is Tukey’s Honestly Significant Difference (HSD) test, which would identify exactly which pairs of nitrogen sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands) have significantly different nitrogen loads (kg year<sup>−1</sup>). This test is valuable because it adjusts for multiple comparisons and helps avoid a Type I error that could arise from comparing multiple groups. Another useful piece of information would be to calculate an effect size measure, such as eta-squared (η²), to determine how much of the variability in nitrogen loads is explained by differences in source type. This would provide insight into whether statistically significant differences in nitrogen loads also have practical importance for understanding the sources of agricultural runoff.
 
 #### c. Suggestions for rewriting
 
-Part 1: We found that there is a statistically significant relationship between the distance from the headwater and the annual total nitrogen load (Pearson’s r = correlation coefficient, p = 0.03, α = significance level), indicating that nitrogen load tends to change as it moves downstream.
+Part 1: Based on the analyses ran, we found that there is a statistically significant relationship between the distance from the headwater (km) and the annual total nitrogen load (kg year<sup>−1</sup>) (Pearson’s r = correlation coefficient, p = 0.03, α = significance level). This result indicates that nitrogen load tends to change as it moves downstream. 
 
-Part 2: We found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load does differ across the different sources tested.
+Part 2: Based on the analyses ran, we found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load differs across the various sources tested. On average, grasslands tended to have lower nitrogen loads than fertilizer ('mean difference' kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>) and urban land ('mean difference' kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>), while no other pairwise differences were statistically significant.    
 
 ## Problem 2. Data Visualization
 
@@ -283,11 +283,10 @@ model1 <- glm(swift_parrot ~ edge_distance + season, # formula: (response variab
               data = nest_clean, # dataframe
               family = "binomial") # distribution
 
-# model 2: distance of forest edge as the predictor
+# model 2: distance from forest edge as the predictor
 model2 <- glm(swift_parrot ~ edge_distance, # formula: (response variable ~ predictor)
               data = nest_clean, # dataframe
               family = "binomial") # distribution
-
 
 # model 3: season as the predictor
 model3 <- glm(swift_parrot ~ season, # formula: (response variable ~ predictor)
@@ -333,7 +332,7 @@ AICc(
 
 ```
 
-The best model, as determined by Akaike’s Information Criterion (AIC), was the one that included both predictor variables, season and edge distance, as it had the lowest AICc value compared to the other models.
+The best model, as determined by Akaike’s Information Criterion (AIC), is the one that included both predictor variables, season and edge distance, as it had the lowest AICc value compared to the other models.
 
 #### h. Visualize the model predictions
 
