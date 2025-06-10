@@ -10,7 +10,6 @@ format:
 
 link to GitHub repository: https://github.com/ethan-mathews24/ENVS-193DS_spring-2025_final
 
-
 ```{r}
 #| message: false
 
@@ -33,33 +32,25 @@ nest_boxes <- read.csv(here("data", "occdist.csv"))
 
 ```
 
-
 ## Problem 1. Research writing
 
+#### a. Transparent statistical methods
 
-#### a. Transparent statistical methods 
-
-In part 1, the authors used a Pearson’s correlation test because they wanted to determine the **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, the authors used a one-way ANOVA to compare the differences in **average** (mean) nitrogen loads between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands). 
-
+In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine the **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the differences in **average** (mean) nitrogen loads between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).
 
 #### b. More information needed
 
-An additional test that would provide more context is Tukey’s Honestly Significant Difference (HSD) test, which would identify exactly which pairs of sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands) have significantly different nitrogen loads. This test is valuable because it adjusts for multiple comparisons and helps avoid a Type I error that could arise from comparing multiple groups. Another useful piece of information would be to calculate an effect size measure, such as eta-squared (η²), to determine the magnitude of the differences between group means. This would provide insight into whether statistically significant differences in nitrogen loads also have practical importance for understanding the sources of agricultural runoff.  
+An additional test that would provide more context in part 2 of the study is Tukey’s Honestly Significant Difference (HSD) test, which would identify exactly which pairs of sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands) have significantly different nitrogen loads. This test is valuable because it adjusts for multiple comparisons and helps avoid a Type I error that could arise from comparing multiple groups. Another useful piece of information would be to calculate an effect size measure, such as eta-squared (η²), to determine how much that grouping variables explain the response variables. This would provide insight into whether statistically significant differences in nitrogen loads also have practical importance for understanding the sources of agricultural runoff.
 
+#### c. Suggestions for rewriting
 
-#### c. Suggestions for rewriting 
+Part 1: We found that there is a statistically significant relationship between the distance from the headwater and the annual total nitrogen load (Pearson’s r = correlation coefficient, p = 0.03, α = significance level), indicating that nitrogen load tends to change as it moves downstream.
 
-Part 1: The authors found that there is a positive relationship between the distance from the headwater and the annual total nitrogen load (Pearson’s correlation, test statistic(degrees of freedom), p = 0.03, α = significance level), indicating that nitrogen load tends to increase downstream. 
+Part 2: We found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load does differ across the different sources tested.
 
+## Problem 2. Data Visualization
 
-Part 2: The authors found a negligible difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, distribution(among groups degrees of freedom, within groups degrees of freedom) = test statistic, p = 0.02, α = significance level), indicating that between the different source that were tested, the average nitrogen load did not differ enough to produce significant results. 
-
-
-
-## Problem 2. Data Visualization 
-
-
-#### a. Cleaning and summarizing 
+#### a. Cleaning and summarizing
 
 ```{r}
 
@@ -67,8 +58,8 @@ sst_clean <- sst |> # starting dataframe
   select(date, temp) |>  # selecting only the necessary columns 
   mutate( # creating new columns using the mutate function
     year = year(date), # new column name that is populated with the year by using lubridate package to pull only the year from the date column
-    month = month(date, #  new column name that is populated with the month by using the lubridate package 
-                  label = TRUE, #returning the month as a factor instead of a numerical value
+    month = month(date, # new column name that is populated with the month by using the lubridate package 
+                  label = TRUE, # returning the month as a factor instead of a numerical value
                   abbr = TRUE) # returning the abbreviated month name instead of the full name
   ) |> 
   filter(year %in% c(2018, 2019, 2020, 2021, 2022, 2023)) |>   # using the filter function to only select the desired years that we want to plot, also reducing processing load 
@@ -84,19 +75,18 @@ sst_clean <- sst |> # starting dataframe
 
 ```{r}
 
-sst_clean |> 
-  slice_sample(n = 5)
+sst_clean |> # dataframe being used 
+  slice_sample(n = 5) # function to display 5 random rows of that dataset
 
 ```
 
 ```{r}
 
-str(sst_clean)
+str(sst_clean) # show the structure of the cleaned dataset
 
 ```
 
-
-#### b. Visualize the data 
+#### b. Visualize the data
 
 ```{r}
 #| fig-height: 5
@@ -111,16 +101,16 @@ ggplot(data = sst_clean, # using cleaned dataframe
   # first layer: line
   geom_line(linewidth = 0.5) + # customizing the line width 
   
-  # seoond layer: points
+  # second layer: points
   geom_point(size = 1.1) + # customizing the point size
   
   scale_color_manual(values = c(
-      "2018" = "#add8e6",  
-      "2019" = "#87ceeb",  
-      "2020" = "#4682b4",  
-      "2021" = "#4169e1",  
-      "2022" = "#0000cd",  
-      "2023" = "#00008b")) + # manually adding colors to the different years
+      "2018" = "paleturquoise",  
+      "2019" = "skyblue",  
+      "2020" = "steelblue",  
+      "2021" = "royalblue",  
+      "2022" = "blue3",  
+      "2023" = "blue4")) + # manually adding blue color gradient to the different years
   
   labs(x = "Month", # changing the x-axis title 
       y = "Mean monthly sea surface temperature (°C)", # changing the y-axis title 
@@ -136,13 +126,11 @@ ggplot(data = sst_clean, # using cleaned dataframe
   axis.title.x = element_text(size = 12),  # changing size of x axis title
   axis.title.y = element_text(size = 12), # changing size of y axis title
   legend.position = "inside", # moving the legend to be inside of the figure 
-  legend.position.inside = c(0.1, 0.75) # changing the position of the legend to be inside the graph by treating it as (x,y) coordinates 
-)
+  legend.position.inside = c(0.1, 0.75)) # changing the position of the legend to be inside the graph by treating it as (x,y) coordinates 
+
 
 
 ```
-
-
 
 ## Problem 3. Data Analysis
 
@@ -188,6 +176,7 @@ str(nest_clean)
 ggplot(data = nest_clean,
        aes(x = season,
            y = edge_distance)) +
+  
   geom_jitter(width = 0.1,
               height = 0,
               shape = 21,
@@ -202,39 +191,26 @@ ggplot(data = nest_clean,
 #| results: "hide"
 #| fig.show: "hide"
 
+# calculating how many observations for number of bins to look at data distribution
+nest_clean |> 
+  group_by(swift_parrot) |> 
+  summarize(n = n())
 
 ggplot(nest_clean %>% filter(swift_parrot == 1),
        aes(x = edge_distance)) +
-  geom_histogram(binwidth = 50, fill = "skyblue", color = "black") +
+  geom_histogram(bins = 5, fill = "skyblue", color = "black") +
   labs(
     title = "Swift Parrot: Distribution of Edge Distance for Occupied Nest Boxes",
     x = "Distance to forest edge (m)",
     y = "Count") +
   theme_minimal()
 
-ggplot(nest_clean %>% filter(common_starling == 1),
-       aes(x = edge_distance)) +
-  geom_histogram(binwidth = 50, fill = "salmon", color = "black") +
-  labs(
-    title = "Common Starling: Distribution of Edge Distance for Occupied Nest Boxes",
-    x = "Distance to forest edge (m)",
-    y = "Count") +
-  theme_minimal()
 
-ggplot(nest_clean %>% filter(unoccupied == 1),
+ggplot(nest_clean %>% filter(swift_parrot == 0),
        aes(x = edge_distance)) +
-  geom_histogram(binwidth = 50, fill = "red", color = "black") +
+  geom_histogram(bins = 11, fill = "blue4", color = "black") +
   labs(
-    title = "Distribution of Edge Distance for Unoccupied Nest Boxes",
-    x = "Distance to forest edge (m)",
-    y = "Count") +
-  theme_minimal()
-
-ggplot(nest_clean %>% filter(tree_martin == 1),
-       aes(x = edge_distance)) +
-  geom_histogram(binwidth = 50, fill = "darkorchid", color = "black") +
-  labs(
-    title = "Tree Martin: Distribution of Edge Distance for Occupied Nest Boxes",
+    title = "Swift Parrot: Distribution of Edge Distance for Unoccupied Nest Boxes",
     x = "Distance to forest edge (m)",
     y = "Count") +
   theme_minimal()
@@ -252,37 +228,38 @@ ggplot(nest_clean %>% filter(tree_martin == 1),
 
 ggplot(data = nest_clean,
        aes(x = edge_distance,
-           y = swift_parrot)) + 
-  geom_point(alpha = 0.6,
-             color = "dodgerblue") +
+           y = swift_parrot,
+           color = as.factor(swift_parrot))) + 
+  
+  geom_point(alpha = 0.6) +
+  
+  scale_color_manual(values = c("0" = "dodgerblue", "1" = "red")) + 
   labs(
     title = "Swift Parrot Occupancy vs. Distance to Forest Edge",
     x = "Distance to forest edge (m)",
-    y = "Occupancy (0 = no, 1 = yes)"
-  ) +
+    y = "Occupancy (0 = no, 1 = yes)",
+    color = "") + 
+  
   theme_minimal()
 
 
 ```
 
-
-#### a. Response variable 
+#### a. Response variable
 
 The 1s and 0s in this dataset are binary representations of whether a particular nest box observation was occupied by a specific species or was empty. For each occupancy type (Swift Parrot, Common Starling, Tree Martin, or empty), a 1 means that category was present in that observation, while a 0 means it was not.
 
-
-#### b. Purpose of study 
+#### b. Purpose of study
 
 The Swift Parrots are the critically endangered target species for conservation efforts with these nest boxes, whereas Common Starlings and Tree Martins are species that also use these boxes and can compete for resources, leading to the displacement of the Swift Parrots. While the Swift Parrots are at imminent risk of extinction due to deforestation and the introduction of predators, the other species are more adaptable and, if not managed properly, can exploit the new habitat resources provided by the boxes.
 
-
 #### c. Difference in "seasons"
 
-The authors compared the years 2016 and 2019, as the Swift Parrots were absent from the site during the interval between the two years. These studies were conducted in November and December, which are ideal months for observing nesting activity: the fledging period for Common Starlings, mid-incubation and mid-nestling period for Swift Parrots, and nest building and incubation for Tree Martins. 
+The authors compared the years 2016 and 2019, as the Swift Parrots were absent from the site during the interval between the two years. These studies were conducted in November and December, which are ideal months for observing nesting activity: the fledging period for Common Starlings, mid-incubation and mid-nestling period for Swift Parrots, and nest building and incubation for Tree Martins.
 
-#### d. Table of models 
+#### d. Table of models
 
-```
+```         
 | Model number | season | distance to forest edge |         Predictor list       |  
 |:------------:|:------:|:-----------------------:|:-----------------------------|  
 | 0            |        |                         | no predictors (null model)   |
@@ -291,11 +268,9 @@ The authors compared the years 2016 and 2019, as the Swift Parrots were absent f
 | 3            |        |           X             | distance to forest edge      |
 ```
 
-
-#### e. Run the models 
+#### e. Run the models
 
 ```{r model-fitting}
-#| echo: false
 #| message: false
 
 # model 0: null model
@@ -303,30 +278,30 @@ model0 <- glm(swift_parrot ~ 1, # formula: the 1 represents no predictors
               data = nest_clean, # dataframe 
               family = "binomial") # distribution
 
-# model 1: all predictor variables
-model1 <- glm(swift_parrot ~ edge_distance + season, # formula: (response variable ~ predictor) 
+# model 1: forest edge and season as predictor variables
+model1 <- glm(swift_parrot ~ edge_distance + season, # formula: (response variable ~ predictor + predictor) 
               data = nest_clean, # dataframe
               family = "binomial") # distribution
 
 # model 2: distance of forest edge as the predictor
-model2 <- glm(swift_parrot ~ edge_distance, # formula: (response variable ~ predictor
+model2 <- glm(swift_parrot ~ edge_distance, # formula: (response variable ~ predictor)
               data = nest_clean, # dataframe
               family = "binomial") # distribution
 
 
 # model 3: season as the predictor
-model3 <- glm(swift_parrot ~ season, # formula: (response variable ~ predictor
+model3 <- glm(swift_parrot ~ season, # formula: (response variable ~ predictor)
               data = nest_clean, # dataframe
               family = "binomial") # distribution
 
 
 ```
 
-
 #### f. Check the diagnostics
 
 ```{r model-diagnostics}
 
+# function to plot the models with simulated residuals
 plot(
   simulateResiduals(model0))
 
@@ -342,26 +317,25 @@ plot(
 
 ```
 
-
-#### g. Select the best model 
+#### g. Select the best model
 
 ```{r model-selection}
 
+# function to check the AICc values among the different models 
 AICc(
   model0,
   model1,
   model2,
   model3
 ) |> 
-  arrange(AICc)
+  arrange(AICc) # arranging the models with the lowest AICc values to be first when displaying results
 
 
 ```
 
-The best model, as determined by Akaike’s Information Criterion (AIC), was the one that included both predictor variables, season and edge distance, as it had the lowest AICc value compared to the other models. 
+The best model, as determined by Akaike’s Information Criterion (AIC), was the one that included both predictor variables, season and edge distance, as it had the lowest AICc value compared to the other models.
 
-
-#### h. Visualize the model predictions 
+#### h. Visualize the model predictions
 
 ```{r visualizing-models}
 #| fig-height: 5
@@ -372,7 +346,7 @@ model1_predictions <- ggpredict(model1, # naming the model
                                  terms = c("edge_distance [all]", "season")) |> # naming the predictors in the model
   
   rename(edge_distance = x, 
-         season = group)
+         season = group) # renaming the column names to be more intuitive
 
 # creating the visual 
 ggplot(data = nest_clean, # data being used 
@@ -431,8 +405,7 @@ ggplot(data = nest_clean, # data being used
 
 ```
 
-
-#### i. Write a caption for your figure 
+#### i. Write a caption for your figure
 
 ```{r}
 #| echo: false
@@ -446,10 +419,10 @@ nest_clean %>%
   summarize(n = n())
 
 ```
-**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic, D. et al. 2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019) 
 
+**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic, D. et al. 2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019)
 
-#### j. Calculate model predictions 
+#### j. Calculate model predictions
 
 ```{r calculate-model-predictions}
 
@@ -490,40 +463,34 @@ model1_predict_edge_season_df |> # starting dataframe
 
 ```
 
+#### k. Interpret the results
 
-#### k. Interpret the results 
-
-Our model predicts that Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: 0.33, 0.64) and 0.30 in 2019 (95% CI: 0.19, 0.44). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.13 (95% CI: 0.06, 0.24) in 2016 and 0.06 (95% CI: 0.03, 0.13) in 2019 (see Table 1). This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that may displace Swift Parrots to edge habitats (Stojanovic et al., 2021). 
-
+Our model predicts that Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: 0.33, 0.64) and 0.30 in 2019 (95% CI: 0.19, 0.44). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.13 (95% CI: 0.06, 0.24) in 2016 and 0.06 (95% CI: 0.03, 0.13) in 2019 (see Table 1). This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that may displace Swift Parrots to edge habitats (Stojanovic et al., 2021).
 
 ## Problem 4. Affective and exploratory visualizations
 
-
-#### a. Comparing visualizations 
+#### a. Comparing visualizations
 
 **How are the visualizations different from each other in the way you have represented your data?**
 
-The visualizations differ because in Homework 2, I simply categorized the workouts as either cardiovascular or strength training, providing a broad overview. In Homework 3 and the final affective visualization, I refined the focus by analyzing how specific muscle groups targeted during workouts correlated with water consumption, offering a more nuanced and affective perspective on how exercise intensity influences hydration. This shift in perspective allowed me to move from a general to a more detailed and insightful understanding of the data.
+The visualizations differ because in Homework 2, I simply categorized the workouts as either cardiovascular or strength training, providing a broad overview. In Homework 3 and the final affective visualization, I refined the focus by analyzing how specific muscle groups targeted during workouts correlated with water consumption, offering a more nuanced and effective perspective on how exercise intensity influences hydration. This shift in perspective allowed me to move from a general to a more detailed and insightful understanding of the data.
 
 **What similarities do you see between all your visualizations?**
 
-Even though the visuals take on different approaches, they all share a common focus of showing how water consumption differs based on the type of exercise. Whether examining the difference between workout types or analyzing specific muscle groups, each visualization seeks to explore how exercise impacts hydration. 
-
+Even though the visuals take on different approaches, they all share a common focus of showing how water consumption differs based on the type of exercise. Whether examining the difference between workout types or analyzing specific muscle groups, each visualization seeks to explore how exercise impacts hydration.
 
 **What patterns (e.g. differences in means/counts/proportions/medians, trends through time, relationships between variables) do you see in each visualization? Are these different between visualizations? If so, why? If not, why not?**
 
-Even though there were not a lot of observations in Homework 2, I still noticed clear differences in the overall data distribution in water consumption between cardiovascular and strength training workouts, reflecting the higher hydration demands of more intensive strength training sessions. Since there were more observations in Homework 3, the patterns became more detailed, revealing varying relationships between specific muscle groups  and water consumption, showing, for example, that workouts targeting larger muscle groups prompted greater hydration and intensity. While both graphs in Homework 2 and 3 showcase the median through boxplots, the final affective visualization focuses on the average (mean) value of each body part since it made more sense to use that metric in this type of visualization.  
-
+Even though there were not a lot of observations in Homework 2, I still noticed clear differences in the overall distribution in water consumption between cardiovascular and strength training workouts, reflecting the higher hydration demands of more intensive strength training sessions. Since there were more observations in Homework 3, the patterns became more detailed, revealing varying relationships between specific muscle groups and water consumption, showing, for example, that workouts targeting larger muscle groups prompted greater hydration and intensity. While both graphs in Homework 2 and 3 showcase the median through boxplots, the final affective visualization focuses on the average (mean) value of each body part since it made more sense to use that metric in this type of visualization.
 
 **What kinds of feedback did you get during week 9 in workshop or from the instructors? How did you implement or try those suggestions? If you tried and kept those suggestions, explain how and why; if not, explain why not.**
 
-During week 9 in workshop the type of feedback that I received focused on the ratio of the body parts to improve clarity and not over represent a body part when the average water consumed did not coincide with it, clarifying what the key is depicting because without hearing the artist statement it would be unclear to the viewers, and finally having a more generalized y-axis that does not start from 1.4 liters and instead starts at 0. I took all of this feedback into consideration because the goal of this project was to humanize the data and make it easier for the viewers to digest than looking at a journal or a datasheet. My peers offered an objective perspective that I valued and applied to my final version. 
+During week 9 in workshop the type of feedback that I received focused on the ratio of the body parts to improve clarity and not over represent a body part when the average water consumed did not coincide with it, clarifying what the key is depicting because without hearing the artist statement it would be unclear to the viewers, and finally having a more generalized y-axis that does not start from 1.4 liters and instead starts at 0. I took all of this feedback into consideration because the goal of this project was to humanize the data and make it easier for the viewers to digest than looking at a journal or a datasheet. My peers offered an objective perspective that I valued and applied to my final version.
 
 
-#### b. Sharing your affective visualization 
+#### b. Sharing your affective visualization
 
-Completed during workshop in week 10.   
-
+Completed during workshop in week 10.
 
 
 
