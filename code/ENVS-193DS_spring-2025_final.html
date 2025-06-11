@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="c.-suggestions-for-rewriting" class="level4">
 <h4 class="anchored" data-anchor-id="c.-suggestions-for-rewriting">c.&nbsp;Suggestions for rewriting</h4>
-<p>Part 1: Based on the analyses ran, we found that there is a statistically significant relationship between the distance from the headwater (km) and the annual total nitrogen load (kg year<sup>−1</sup>) (Pearson’s r = correlation coefficient, p = 0.03, α = significance level). This result indicates that nitrogen load tends to change as it moves downstream.</p>
+<p>Part 1: Based on the analyses ran, we found that there is a strong positive (Pearson’s r = correlation coefficient) relationship between the distance from the headwater (km) and the annual total nitrogen load (kg year<sup>−1</sup>) (p = 0.03). This result indicates that nitrogen load tends to change as it moves downstream.</p>
 <p>Part 2: Based on the analyses ran, we found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load differs across the various sources tested. On average, grasslands tend to have lower nitrogen loads than fertilizer (‘mean difference’ kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>) and urban land (‘mean difference’ kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>), while no other pairwise differences were statistically significant.</p>
 </section>
 </section>
@@ -210,11 +210,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   year  month mean_monthly_sst
   &lt;fct&gt; &lt;ord&gt;            &lt;dbl&gt;
-1 2023  Mar               12.8
-2 2019  Feb               14.1
-3 2023  Aug               18.5
-4 2019  Apr               13.7
-5 2022  Jan               13.9</code></pre>
+1 2018  Oct               18.5
+2 2023  Jan               14  
+3 2021  Apr               13.1
+4 2022  Aug               17.5
+5 2022  Nov               15  </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="d.-table-of-models" class="level4">
 <h4 class="anchored" data-anchor-id="d.-table-of-models">d.&nbsp;Table of models</h4>
-<pre><code>| Model number | season | distance to forest edge |         Predictor list       |  
+<pre><code>| model number | season | distance to forest edge |       model description      |  
 |:------------:|:------:|:-----------------------:|:-----------------------------|  
 | 0            |        |                         | no predictors (null model)   |
 | 1            |    X   |           X             | all predictors (full model)  |
@@ -393,7 +393,7 @@ model0  1 238.8318</code></pre>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"edge_distance [all]"</span>, <span class="st">"season"</span>)) <span class="sc">|&gt;</span> <span class="co"># naming the predictors in the model</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">edge_distance =</span> x, </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">season =</span> group) <span class="co"># renaming the column names to be more intuitive</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">season =</span> group) <span class="co"># renaming the column names to be more intuitive and consistent</span></span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># creating the visual </span></span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nest_clean, <span class="co"># data being used </span></span>
@@ -403,8 +403,8 @@ model0  1 238.8318</code></pre>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points to show underlying data</span></span>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> nest_clean, <span class="co"># underlying data points </span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>, <span class="co"># changing size</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span> <span class="co"># changing transparency</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">1.5</span>, <span class="co"># changing size</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.45</span>) <span class="sc">+</span> <span class="co"># changing transparency</span></span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: display ribbon of 95% CI </span></span>
 <span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> model1_predictions, <span class="co"># data from ggpredict </span></span>
@@ -432,7 +432,7 @@ model0  1 238.8318</code></pre>
 <span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2016"</span> <span class="ot">=</span> <span class="st">"deepskyblue"</span>,</span>
 <span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2019"</span> <span class="ot">=</span> <span class="st">"firebrick2"</span>)) <span class="sc">+</span> <span class="co"># adding fill colors </span></span>
 <span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># template plot</span></span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># template theme</span></span>
 <span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>), <span class="co"># changing the background color</span></span>
 <span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
@@ -447,7 +447,7 @@ model0  1 238.8318</code></pre>
 <span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Probability of Swift Parrot Occupancy"</span>, <span class="co"># changing y-axis title</span></span>
 <span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Distance from Forest Edge (meters)"</span>, <span class="co"># changing x-axis title</span></span>
 <span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Year"</span>, <span class="co"># changing legend title</span></span>
-<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Year"</span>) <span class="co"># changing legend title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Year"</span>) <span class="co"># changing legend title so it merges into one</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -459,7 +459,7 @@ model0  1 238.8318</code></pre>
 </section>
 <section id="i.-write-a-caption-for-your-figure" class="level4">
 <h4 class="anchored" data-anchor-id="i.-write-a-caption-for-your-figure">i. Write a caption for your figure</h4>
-<p><strong>Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.</strong> Data from <em>Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird</em> (Stojanovic, D. et al.&nbsp;2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species, indicating a shift in available resources. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019)</p>
+<p><strong>Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.</strong> Data from <em>Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird</em> (Stojanovic et al., 2021; doi.org/10.5061/dryad.83bk3j9sb). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species, indicating a shift in resource availability. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points represent Swift Parrot nest box occupancy (0 = absent, 1 = present), with colors representing the year (blue = 2016, red = 2019).</p>
 </section>
 <section id="j.-calculate-model-predictions" class="level4">
 <h4 class="anchored" data-anchor-id="j.-calculate-model-predictions">j. Calculate model predictions</h4>
@@ -504,7 +504,7 @@ edge_distance | Predicted |     95% CI
 <p><strong>What patterns (e.g.&nbsp;differences in means/counts/proportions/medians, trends through time, relationships between variables) do you see in each visualization? Are these different between visualizations? If so, why? If not, why not?</strong></p>
 <p>Even though there were not a lot of observations in Homework 2, I still noticed clear differences in the overall distribution in water consumption between cardiovascular and strength training workouts, reflecting the higher hydration demands of more intensive strength training sessions. Since there were more observations in Homework 3, the patterns became more detailed, revealing varying relationships between specific muscle groups and water consumption, showing, for example, that workouts targeting larger muscle groups prompted greater hydration and intensity. While both graphs in Homework 2 and 3 showcase the median through boxplots, the final affective visualization focuses on the average (mean) value of each body part since it made more sense to use that metric in this type of visualization.</p>
 <p><strong>What kinds of feedback did you get during week 9 in workshop or from the instructors? How did you implement or try those suggestions? If you tried and kept those suggestions, explain how and why; if not, explain why not.</strong></p>
-<p>During week 9 in workshop the type of feedback that I received focused on the ratio of the body parts to improve clarity and not over represent a body part when the average water consumed did not coincide with it, clarifying what the key is depicting because without hearing the artist statement it would be unclear to the viewers, and finally having a more generalized y-axis that does not start from 1.4 liters and instead starts at 0. I took all of this feedback into consideration because the goal of this project was to humanize the data and make it easier for the viewers to digest than looking at a journal or a datasheet. My peers offered an objective perspective that I valued and applied to my final version.</p>
+<p>During week 9 in workshop the type of feedback that I received focused on the ratio of the body parts to improve clarity and not over represent a body part when the average water consumed did not coincide with it, clarifying what the key is depicting because without hearing the artist statement it would be unclear to the viewers, and finally having a more generalized y-axis that does not start from 1.4 liters and instead starts at 0. I took all of this feedback into consideration because the goal of this project was to humanize the data and make it easier for the viewers to digest than looking at a fitness journal or a datasheet. My peers offered an objective perspective that I valued and applied to my final version.</p>
 </section>
 <section id="b.-sharing-your-affective-visualization" class="level4">
 <h4 class="anchored" data-anchor-id="b.-sharing-your-affective-visualization">b. Sharing your affective visualization</h4>
