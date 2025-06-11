@@ -44,7 +44,7 @@ An additional test that would provide more context in part 2 of the study is Tuk
 
 #### c. Suggestions for rewriting
 
-Part 1: Based on the analyses ran, we found that there is a statistically significant relationship between the distance from the headwater (km) and the annual total nitrogen load (kg year<sup>−1</sup>) (Pearson’s r = correlation coefficient, p = 0.03, α = significance level). This result indicates that nitrogen load tends to change as it moves downstream. 
+Part 1: Based on the analyses ran, we found that there is a strong positive (Pearson's r = correlation coefficient) relationship between the distance from the headwater (km) and the annual total nitrogen load (kg year<sup>−1</sup>) (p = 0.03). This result indicates that nitrogen load tends to change as it moves downstream. 
 
 Part 2: Based on the analyses ran, we found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load differs across the various sources tested. On average, grasslands tend to have lower nitrogen loads than fertilizer ('mean difference' kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>) and urban land ('mean difference' kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>), while no other pairwise differences were statistically significant.    
 
@@ -262,7 +262,7 @@ The authors compared the years 2016 and 2019, as the Swift Parrots were absent f
 #### d. Table of models
 
 ```         
-| Model number | season | distance to forest edge |         Predictor list       |  
+| model number | season | distance to forest edge |       model description      |  
 |:------------:|:------:|:-----------------------:|:-----------------------------|  
 | 0            |        |                         | no predictors (null model)   |
 | 1            |    X   |           X             | all predictors (full model)  |
@@ -347,7 +347,7 @@ model1_predictions <- ggpredict(model1, # naming the model
                                  terms = c("edge_distance [all]", "season")) |> # naming the predictors in the model
   
   rename(edge_distance = x, 
-         season = group) # renaming the column names to be more intuitive
+         season = group) # renaming the column names to be more intuitive and consistent
 
 # creating the visual 
 ggplot(data = nest_clean, # data being used 
@@ -357,8 +357,8 @@ ggplot(data = nest_clean, # data being used
 
   # first layer: points to show underlying data
   geom_point(data = nest_clean, # underlying data points 
-             size = 2, # changing size
-             alpha = 0.4) + # changing transparency
+             size = 1.5, # changing size
+             alpha = 0.45) + # changing transparency
  
   # second layer: display ribbon of 95% CI 
   geom_ribbon(data = model1_predictions, # data from ggpredict 
@@ -386,7 +386,7 @@ ggplot(data = nest_clean, # data being used
   scale_fill_manual(values = c("2016" = "deepskyblue",
                                "2019" = "firebrick2")) + # adding fill colors 
   
-  theme_bw() + # template plot
+  theme_bw() + # template theme
   
   theme(panel.background = element_rect(fill = "white"), # changing the background color
   panel.grid.major = element_line(color = NA), # removing the color to the grid lines
@@ -401,7 +401,7 @@ ggplot(data = nest_clean, # data being used
        y = "Probability of Swift Parrot Occupancy", # changing y-axis title
        x = "Distance from Forest Edge (meters)", # changing x-axis title
        color = "Year", # changing legend title
-       fill = "Year") # changing legend title
+       fill = "Year") # changing legend title so it merges into one
 
 
 ```
@@ -421,7 +421,7 @@ nest_clean %>%
 
 ```
 
-**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic, D. et al. 2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species, indicating a shift in available resources. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019)
+**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic et al., 2021; doi.org/10.5061/dryad.83bk3j9sb). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species, indicating a shift in resource availability. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points represent Swift Parrot nest box occupancy (0 = absent, 1 = present), with colors representing the year (blue = 2016, red = 2019). 
 
 #### j. Calculate model predictions
 
@@ -460,7 +460,7 @@ Even though there were not a lot of observations in Homework 2, I still noticed 
 
 **What kinds of feedback did you get during week 9 in workshop or from the instructors? How did you implement or try those suggestions? If you tried and kept those suggestions, explain how and why; if not, explain why not.**
 
-During week 9 in workshop the type of feedback that I received focused on the ratio of the body parts to improve clarity and not over represent a body part when the average water consumed did not coincide with it, clarifying what the key is depicting because without hearing the artist statement it would be unclear to the viewers, and finally having a more generalized y-axis that does not start from 1.4 liters and instead starts at 0. I took all of this feedback into consideration because the goal of this project was to humanize the data and make it easier for the viewers to digest than looking at a journal or a datasheet. My peers offered an objective perspective that I valued and applied to my final version.
+During week 9 in workshop the type of feedback that I received focused on the ratio of the body parts to improve clarity and not over represent a body part when the average water consumed did not coincide with it, clarifying what the key is depicting because without hearing the artist statement it would be unclear to the viewers, and finally having a more generalized y-axis that does not start from 1.4 liters and instead starts at 0. I took all of this feedback into consideration because the goal of this project was to humanize the data and make it easier for the viewers to digest than looking at a fitness journal or a datasheet. My peers offered an objective perspective that I valued and applied to my final version.
 
 
 #### b. Sharing your affective visualization
