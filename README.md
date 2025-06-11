@@ -23,6 +23,8 @@ library(here) # file organization
 
 library(readxl) # reading excel files 
 
+library(ggeffects) # getting model predictions
+
 library(MuMIn) # model selection
 
 library(DHARMa) # to check diagnostics from the model
