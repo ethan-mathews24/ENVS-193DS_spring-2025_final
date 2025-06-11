@@ -169,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="problem-1.-research-writing">Problem 1. Research writing</h2>
 <section id="a.-transparent-statistical-methods" class="level4">
 <h4 class="anchored" data-anchor-id="a.-transparent-statistical-methods">a. Transparent statistical methods</h4>
-<p>In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear <strong>relationship</strong> (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the differences in <strong>average</strong> (mean) nitrogen loads (kg year<sup>−1</sup>) between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).</p>
+<p>In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear <strong>relationship</strong> (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the differences in <strong>average</strong> (mean) nitrogen loads (kg year<sup>−1</sup>) among the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).</p>
 </section>
 <section id="b.-more-information-needed" class="level4">
 <h4 class="anchored" data-anchor-id="b.-more-information-needed">b. More information needed</h4>
@@ -210,11 +210,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   year  month mean_monthly_sst
   &lt;fct&gt; &lt;ord&gt;            &lt;dbl&gt;
-1 2023  Jun               16  
-2 2022  Feb               14.1
-3 2021  Nov               15.8
-4 2018  Mar               13.5
-5 2021  Mar               12.6</code></pre>
+1 2023  Mar               12.8
+2 2019  Feb               14.1
+3 2023  Aug               18.5
+4 2019  Apr               13.7
+5 2022  Jan               13.9</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -490,7 +490,7 @@ edge_distance | Predicted |     95% CI
 </section>
 <section id="k.-interpret-the-results" class="level4">
 <h4 class="anchored" data-anchor-id="k.-interpret-the-results">k. Interpret the results</h4>
-<p>Based on our model predictions from part j, Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: [0.33, 0.64]) and 0.30 in 2019 (95% CI: [0.18, 0.44]). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.12 (95% CI: [0.06, 0.24]) in 2016 and 0.06 (95% CI: [0.03, 0.13]) in 2019. This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that displaced Swift Parrots to edge habitats (Stojanovic et al., 2021).</p>
+<p>Based on our model predictions from part j, Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: [0.33, 0.64]) and 0.30 in 2019 (95% CI: [0.18, 0.44]). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.12 (95% CI: [0.06, 0.24]) in 2016 and 0.06 (95% CI: [0.03, 0.13]) in 2019. This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, Tree Martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that displaced Swift Parrots to edge habitats (Stojanovic et al., 2021).</p>
 </section>
 </section>
 <section id="problem-4.-affective-and-exploratory-visualizations" class="level2">

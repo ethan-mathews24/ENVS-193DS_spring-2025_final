@@ -36,7 +36,7 @@ nest_boxes <- read.csv(here("data", "occdist.csv"))
 
 #### a. Transparent statistical methods
 
-In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the differences in **average** (mean) nitrogen loads (kg year<sup>−1</sup>) between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).
+In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the differences in **average** (mean) nitrogen loads (kg year<sup>−1</sup>) among the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).
 
 #### b. More information needed
 
@@ -440,7 +440,7 @@ ggpredict(model1,
 
 #### k. Interpret the results
 
-Based on our model predictions from part j, Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: [0.33, 0.64]) and 0.30 in 2019 (95% CI: [0.18, 0.44]). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.12 (95% CI: [0.06, 0.24]) in 2016 and 0.06 (95% CI: [0.03, 0.13]) in 2019. This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that displaced Swift Parrots to edge habitats (Stojanovic et al., 2021).
+Based on our model predictions from part j, Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: [0.33, 0.64]) and 0.30 in 2019 (95% CI: [0.18, 0.44]). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.12 (95% CI: [0.06, 0.24]) in 2016 and 0.06 (95% CI: [0.03, 0.13]) in 2019. This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, Tree Martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that displaced Swift Parrots to edge habitats (Stojanovic et al., 2021).
 
 ## Problem 4. Affective and exploratory visualizations
 
