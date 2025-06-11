@@ -36,7 +36,7 @@ nest_boxes <- read.csv(here("data", "occdist.csv"))
 
 #### a. Transparent statistical methods
 
-In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the significant differences in **average** (mean) nitrogen loads (kg year<sup>−1</sup>) between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).
+In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear **relationship** (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the differences in **average** (mean) nitrogen loads (kg year<sup>−1</sup>) between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).
 
 #### b. More information needed
 
@@ -46,7 +46,7 @@ An additional test that would provide more context in part 2 of the study is Tuk
 
 Part 1: Based on the analyses ran, we found that there is a statistically significant relationship between the distance from the headwater (km) and the annual total nitrogen load (kg year<sup>−1</sup>) (Pearson’s r = correlation coefficient, p = 0.03, α = significance level). This result indicates that nitrogen load tends to change as it moves downstream. 
 
-Part 2: Based on the analyses ran, we found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load differs across the various sources tested. On average, grasslands tended to have lower nitrogen loads than fertilizer ('mean difference' kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>) and urban land ('mean difference' kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>), while no other pairwise differences were statistically significant.    
+Part 2: Based on the analyses ran, we found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load differs across the various sources tested. On average, grasslands tend to have lower nitrogen loads than fertilizer ('mean difference' kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>) and urban land ('mean difference' kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>), while no other pairwise differences were statistically significant.    
 
 ## Problem 2. Data Visualization
 
@@ -123,8 +123,8 @@ ggplot(data = sst_clean, # using cleaned dataframe
   theme(panel.background = element_rect(fill = "white"), # changing the background color
   panel.grid.major = element_line(color = NA), # removing the color to the grid lines
   panel.grid.minor = element_line(color = NA), # removing the color to the grid lines
-  axis.title.x = element_text(size = 12),  # changing size of x axis title
-  axis.title.y = element_text(size = 12), # changing size of y axis title
+  axis.title.x = element_text(size = 13),  # changing size of x axis title
+  axis.title.y = element_text(size = 13), # changing size of y axis title
   legend.position = "inside", # moving the legend to be inside of the figure 
   legend.position.inside = c(0.1, 0.75)) # changing the position of the legend to be inside the graph by treating it as (x,y) coordinates 
 
@@ -140,20 +140,20 @@ ggplot(data = sst_clean, # using cleaned dataframe
 #| results: "hide"
 
 
-nest_clean <- nest_boxes |> 
-  clean_names() |> 
+nest_clean <- nest_boxes |> # new dataframe
+  clean_names() |> # cleaning names 
   rename("swift_parrot" = "sp",
          "common_starling" = "cs",
          "unoccupied" = "e",
-         "tree_martin" = "tm"
+         "tree_martin" = "tm" # renaming column names 
          ) |> 
-  select(-box, -event_id, -repeated_use) |> 
+  select(-box, -event_id, -repeated_use) |> # removing unnecessary columns
   mutate(
-    season = as.factor(season),
-    swift_parrot = as.numeric(swift_parrot),
-    common_starling = as.numeric(common_starling),
-    unoccupied = as.numeric(unoccupied),
-    tree_martin = as.numeric(tree_martin)
+    season = as.factor(season), # making seasons to be seen as a factor 
+    swift_parrot = as.numeric(swift_parrot), # making swift parrot column as numeric
+    common_starling = as.numeric(common_starling), # making common starling column as numeric
+    unoccupied = as.numeric(unoccupied), # making unoccupied column as numeric 
+    tree_martin = as.numeric(tree_martin) # making tree martin as numeric 
   )
 
   
@@ -173,6 +173,7 @@ str(nest_clean)
 #| fig.show: "hide"
 
 
+# exploratory visual to compare the distribution of 2016 and 2019 swift parrot presence
 ggplot(data = nest_clean,
        aes(x = season,
            y = edge_distance)) +
@@ -196,6 +197,7 @@ nest_clean |>
   group_by(swift_parrot) |> 
   summarize(n = n())
 
+# exploratory data to see the distribution of swift parrot column
 ggplot(nest_clean %>% filter(swift_parrot == 1),
        aes(x = edge_distance)) +
   geom_histogram(bins = 5, fill = "skyblue", color = "black") +
@@ -225,7 +227,7 @@ ggplot(nest_clean %>% filter(swift_parrot == 0),
 #| results: "hide"
 #| fig.show: "hide"
 
-
+# exploratory data to see how presence changes over distance
 ggplot(data = nest_clean,
        aes(x = edge_distance,
            y = swift_parrot,
@@ -302,16 +304,16 @@ model3 <- glm(swift_parrot ~ season, # formula: (response variable ~ predictor)
 
 # function to plot the models with simulated residuals
 plot(
-  simulateResiduals(model0))
+  simulateResiduals(model0)) # plotting null model 
 
 plot(
-  simulateResiduals(model1))
+  simulateResiduals(model1)) # plotting full model with all predictors 
 
 plot(
-  simulateResiduals(model2))
+  simulateResiduals(model2)) # plotting model with season as predictor 
 
 plot(
-  simulateResiduals(model3))
+  simulateResiduals(model3)) # plotting model with distance from forest as predictor 
 
 
 ```
@@ -415,56 +417,30 @@ ggplot(data = nest_clean, # data being used
 
 nest_clean %>%
   group_by(season) %>%
-  summarize(n = n())
+  summarize(n = n()) # summarize each group size for the figure's caption
 
 ```
 
-**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic, D. et al. 2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019)
+**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic, D. et al. 2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species, indicating a shift in available resources. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019)
 
 #### j. Calculate model predictions
 
 ```{r calculate-model-predictions}
 
-# looking at model predictions
-model1_predict_edge_season <- ggpredict(model1, # creating new object
-                                 terms = c("edge_distance [0, 900]", "season")) # selecting parameters
+# calculating model predictions for 2016 season 
+ggpredict(model1, 
+          terms = c("edge_distance [0, 900]", "season [2016]")) # selecting parameters
 
-
-model1_predict_edge_season_df <- as.data.frame(model1_predict_edge_season) # Convert ggpredict object to data frame
-
-
-model1_predict_edge_season_df |> # starting dataframe
-  select(Year = group,
-         Distance_meters = x,
-         Predicted_Probability = predicted,
-         Lower_95_CI = conf.low,
-         Upper_95_CI = conf.high) |> # rename and reorder the columns
- 
-  # creating summary table for model output 
-   gt() |> 
-  tab_header(
-    title = "Table 1. Summary Table of Predicted Swift Parrot Occupancy Probability", # adding title
-    subtitle = "At 0 meters and 900 meters from forest edge" # adding subtitle
-  ) |> 
-  cols_label(
-    Year = "Year",
-    Distance_meters = "Distance (meters)",
-    Predicted_Probability = "Predicted Probability",
-    Lower_95_CI = "95% Confidence Interval (Lower)",
-    Upper_95_CI = "95% Confidence Interval (Upper)" # changing the column names in the table 
-  ) |> 
-  fmt_number(
-    columns = c(Predicted_Probability, Lower_95_CI, Upper_95_CI),
-    decimals = 3) |> # rounding off the decimals
-  tab_options(
-    heading.align = "left")  # move title and subtitle to the left
+# calculating model predictions for 2019 season 
+ggpredict(model1, 
+          terms = c("edge_distance [0, 900]", "season [2019]")) # selecting parameters
 
 
 ```
 
 #### k. Interpret the results
 
-Our model predicts that Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: 0.33, 0.64) and 0.30 in 2019 (95% CI: 0.19, 0.44). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.13 (95% CI: 0.06, 0.24) in 2016 and 0.06 (95% CI: 0.03, 0.13) in 2019 (see Table 1). This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that may displace Swift Parrots to edge habitats (Stojanovic et al., 2021).
+Based on our model predictions from part j, Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: [0.33, 0.64]) and 0.30 in 2019 (95% CI: [0.18, 0.44]). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.12 (95% CI: [0.06, 0.24]) in 2016 and 0.06 (95% CI: [0.03, 0.13]) in 2019. This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that displaced Swift Parrots to edge habitats (Stojanovic et al., 2021).
 
 ## Problem 4. Affective and exploratory visualizations
 

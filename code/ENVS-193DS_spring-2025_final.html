@@ -169,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="problem-1.-research-writing">Problem 1. Research writing</h2>
 <section id="a.-transparent-statistical-methods" class="level4">
 <h4 class="anchored" data-anchor-id="a.-transparent-statistical-methods">a. Transparent statistical methods</h4>
-<p>In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear <strong>relationship</strong> (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the significant differences in <strong>average</strong> (mean) nitrogen loads (kg year<sup>−1</sup>) between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).</p>
+<p>In part 1, my co-worker used a Pearson’s correlation test because they wanted to determine whether there is a linear <strong>relationship</strong> (correlation) between distance from the headwater (km) and annual total nitrogen load (kg year<sup>−1</sup>). In part 2, my co-worker used a one-way ANOVA to compare the differences in <strong>average</strong> (mean) nitrogen loads (kg year<sup>−1</sup>) between the different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands).</p>
 </section>
 <section id="b.-more-information-needed" class="level4">
 <h4 class="anchored" data-anchor-id="b.-more-information-needed">b. More information needed</h4>
@@ -177,8 +177,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="c.-suggestions-for-rewriting" class="level4">
 <h4 class="anchored" data-anchor-id="c.-suggestions-for-rewriting">c.&nbsp;Suggestions for rewriting</h4>
-<p>Part 1: Based on the analyses ran, we reject to null hypothesis and found that there is a statistically significant relationship between the distance from the headwater (km) and the annual total nitrogen load (kg year<sup>−1</sup>) (Pearson’s r = correlation coefficient, p = 0.03, α = significance level). This result indicates that nitrogen load tends to change as it moves downstream.</p>
-<p>Part 2: Based on the analyses ran, we reject the null hypothesis and found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load does differ across the different sources tested. On average, when we compared pairwise means from the Tukeys’ HSD, grasslands tended to have less nitrogen loads than fertilizer (‘mean difference’ kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>) and urban land (‘mean difference’ kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>).</p>
+<p>Part 1: Based on the analyses ran, we found that there is a statistically significant relationship between the distance from the headwater (km) and the annual total nitrogen load (kg year<sup>−1</sup>) (Pearson’s r = correlation coefficient, p = 0.03, α = significance level). This result indicates that nitrogen load tends to change as it moves downstream.</p>
+<p>Part 2: Based on the analyses ran, we found a large difference (η² = effect size) between sources in average nitrogen load (kg year<sup>−1</sup>) (one-way ANOVA, F-distribution(among groups degrees of freedom, within groups degrees of freedom) = F-statistic, p = 0.02, α = significance level), indicating that the average nitrogen load differs across the various sources tested. On average, grasslands tend to have lower nitrogen loads than fertilizer (‘mean difference’ kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>) and urban land (‘mean difference’ kg year<sup>−1</sup>, significance level CI: [lower CI, upper CI] kg year<sup>−1</sup>), while no other pairwise differences were statistically significant.</p>
 </section>
 </section>
 <section id="problem-2.-data-visualization" class="level2">
@@ -210,11 +210,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   year  month mean_monthly_sst
   &lt;fct&gt; &lt;ord&gt;            &lt;dbl&gt;
-1 2019  Dec               15  
-2 2023  Dec               16.1
-3 2023  Jul               16.3
-4 2020  Jun               15.9
-5 2018  Nov               17.9</code></pre>
+1 2023  Jun               16  
+2 2022  Feb               14.1
+3 2021  Nov               15.8
+4 2018  Mar               13.5
+5 2021  Mar               12.6</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -261,8 +261,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>), <span class="co"># changing the background color</span></span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># removing the color to the grid lines</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),  <span class="co"># changing size of x axis title</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>), <span class="co"># changing size of y axis title</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>),  <span class="co"># changing size of x axis title</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>), <span class="co"># changing size of y axis title</span></span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="co"># moving the legend to be inside of the figure </span></span>
 <span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.75</span>)) <span class="co"># changing the position of the legend to be inside the graph by treating it as (x,y) coordinates </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -327,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to plot the models with simulated residuals</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulateResiduals</span>(model0))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulateResiduals</span>(model0)) <span class="co"># plotting null model </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -336,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulateResiduals</span>(model1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulateResiduals</span>(model1)) <span class="co"># plotting full model with all predictors </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -345,7 +345,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulateResiduals</span>(model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulateResiduals</span>(model2)) <span class="co"># plotting model with season as predictor </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -354,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulateResiduals</span>(model3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">simulateResiduals</span>(model3)) <span class="co"># plotting model with distance from forest as predictor </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -459,550 +459,38 @@ model0  1 238.8318</code></pre>
 </section>
 <section id="i.-write-a-caption-for-your-figure" class="level4">
 <h4 class="anchored" data-anchor-id="i.-write-a-caption-for-your-figure">i. Write a caption for your figure</h4>
-<p><strong>Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.</strong> Data from <em>Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird</em> (Stojanovic, D. et al.&nbsp;2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019)</p>
+<p><strong>Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.</strong> Data from <em>Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird</em> (Stojanovic, D. et al.&nbsp;2021). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species, indicating a shift in available resources. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points indicate individual nest box occupancy (0 or 1), with color representing the year (blue = 2016, red = 2019)</p>
 </section>
 <section id="j.-calculate-model-predictions" class="level4">
 <h4 class="anchored" data-anchor-id="j.-calculate-model-predictions">j. Calculate model predictions</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># looking at model predictions</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>model1_predict_edge_season <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(model1, <span class="co"># creating new object</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"edge_distance [0, 900]"</span>, <span class="st">"season"</span>)) <span class="co"># selecting parameters</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>model1_predict_edge_season_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(model1_predict_edge_season) <span class="co"># Convert ggpredict object to data frame</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>model1_predict_edge_season_df <span class="sc">|&gt;</span> <span class="co"># starting dataframe</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">Year =</span> group,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Distance_meters =</span> x,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Predicted_Probability =</span> predicted,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Lower_95_CI =</span> conf.low,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Upper_95_CI =</span> conf.high) <span class="sc">|&gt;</span> <span class="co"># rename and reorder the columns</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># creating summary table for model output </span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Table 1. Summary Table of Predicted Swift Parrot Occupancy Probability"</span>, <span class="co"># adding title</span></span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"At 0 meters and 900 meters from forest edge"</span> <span class="co"># adding subtitle</span></span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">Year =</span> <span class="st">"Year"</span>,</span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">Distance_meters =</span> <span class="st">"Distance (meters)"</span>,</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">Predicted_Probability =</span> <span class="st">"Predicted Probability"</span>,</span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">Lower_95_CI =</span> <span class="st">"95% Confidence Interval (Lower)"</span>,</span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">Upper_95_CI =</span> <span class="st">"95% Confidence Interval (Upper)"</span> <span class="co"># changing the column names in the table </span></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(</span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(Predicted_Probability, Lower_95_CI, Upper_95_CI),</span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> <span class="co"># rounding off the decimals</span></span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(</span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">heading.align =</span> <span class="st">"left"</span>)  <span class="co"># move title and subtitle to the left</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="wsgdtfpcgm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wsgdtfpcgm table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculating model predictions for 2016 season </span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpredict</span>(model1, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"edge_distance [0, 900]"</span>, <span class="st">"season [2016]"</span>)) <span class="co"># selecting parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Predicted probabilities of swift_parrot
 
-#wsgdtfpcgm thead, #wsgdtfpcgm tbody, #wsgdtfpcgm tfoot, #wsgdtfpcgm tr, #wsgdtfpcgm td, #wsgdtfpcgm th {
-  border-style: none;
-}
-
-#wsgdtfpcgm p {
-  margin: 0;
-  padding: 0;
-}
-
-#wsgdtfpcgm .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#wsgdtfpcgm .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#wsgdtfpcgm .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#wsgdtfpcgm .gt_heading {
-  background-color: #FFFFFF;
-  text-align: left;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#wsgdtfpcgm .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#wsgdtfpcgm .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#wsgdtfpcgm .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#wsgdtfpcgm .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#wsgdtfpcgm .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#wsgdtfpcgm .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#wsgdtfpcgm .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#wsgdtfpcgm .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#wsgdtfpcgm .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#wsgdtfpcgm .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#wsgdtfpcgm .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wsgdtfpcgm .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#wsgdtfpcgm .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#wsgdtfpcgm .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#wsgdtfpcgm .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wsgdtfpcgm .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#wsgdtfpcgm .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wsgdtfpcgm .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#wsgdtfpcgm .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wsgdtfpcgm .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#wsgdtfpcgm .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wsgdtfpcgm .gt_left {
-  text-align: left;
-}
-
-#wsgdtfpcgm .gt_center {
-  text-align: center;
-}
-
-#wsgdtfpcgm .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#wsgdtfpcgm .gt_font_normal {
-  font-weight: normal;
-}
-
-#wsgdtfpcgm .gt_font_bold {
-  font-weight: bold;
-}
-
-#wsgdtfpcgm .gt_font_italic {
-  font-style: italic;
-}
-
-#wsgdtfpcgm .gt_super {
-  font-size: 65%;
-}
-
-#wsgdtfpcgm .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#wsgdtfpcgm .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#wsgdtfpcgm .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#wsgdtfpcgm .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#wsgdtfpcgm .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#wsgdtfpcgm .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#wsgdtfpcgm .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#wsgdtfpcgm .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#wsgdtfpcgm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<thead>
-<tr class="header gt_heading">
-<th colspan="5" class="gt_heading gt_title gt_font_normal">Table 1. Summary Table of Predicted Swift Parrot Occupancy Probability</th>
-</tr>
-<tr class="odd gt_heading">
-<th colspan="5" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">At 0 meters and 900 meters from forest edge</th>
-</tr>
-<tr class="header gt_col_headings">
-<th id="Year" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Year</th>
-<th id="Distance_meters" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Distance (meters)</th>
-<th id="Predicted_Probability" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Predicted Probability</th>
-<th id="Lower_95_CI" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">95% Confidence Interval (Lower)</th>
-<th id="Upper_95_CI" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">95% Confidence Interval (Upper)</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_center" headers="Year">2016</td>
-<td class="gt_row gt_right" headers="Distance_meters">0</td>
-<td class="gt_row gt_right" headers="Predicted_Probability">0.481</td>
-<td class="gt_row gt_right" headers="Lower_95_CI">0.327</td>
-<td class="gt_row gt_right" headers="Upper_95_CI">0.638</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Year">2019</td>
-<td class="gt_row gt_right" headers="Distance_meters">0</td>
-<td class="gt_row gt_right" headers="Predicted_Probability">0.298</td>
-<td class="gt_row gt_right" headers="Lower_95_CI">0.185</td>
-<td class="gt_row gt_right" headers="Upper_95_CI">0.443</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center" headers="Year">2016</td>
-<td class="gt_row gt_right" headers="Distance_meters">900</td>
-<td class="gt_row gt_right" headers="Predicted_Probability">0.125</td>
-<td class="gt_row gt_right" headers="Lower_95_CI">0.062</td>
-<td class="gt_row gt_right" headers="Upper_95_CI">0.235</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Year">2019</td>
-<td class="gt_row gt_right" headers="Distance_meters">900</td>
-<td class="gt_row gt_right" headers="Predicted_Probability">0.061</td>
-<td class="gt_row gt_right" headers="Lower_95_CI">0.027</td>
-<td class="gt_row gt_right" headers="Upper_95_CI">0.134</td>
-</tr>
-</tbody>
-</table>
-
+edge_distance | Predicted |     95% CI
+--------------------------------------
+            0 |      0.48 | 0.33, 0.64
+          900 |      0.12 | 0.06, 0.24</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculating model predictions for 2019 season </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpredict</span>(model1, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"edge_distance [0, 900]"</span>, <span class="st">"season [2019]"</span>)) <span class="co"># selecting parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Predicted probabilities of swift_parrot
+
+edge_distance | Predicted |     95% CI
+--------------------------------------
+            0 |      0.30 | 0.18, 0.44
+          900 |      0.06 | 0.03, 0.13</code></pre>
 </div>
 </div>
 </section>
 <section id="k.-interpret-the-results" class="level4">
 <h4 class="anchored" data-anchor-id="k.-interpret-the-results">k. Interpret the results</h4>
-<p>Our model predicts that Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: 0.33, 0.64) and 0.30 in 2019 (95% CI: 0.19, 0.44). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.13 (95% CI: 0.06, 0.24) in 2016 and 0.06 (95% CI: 0.03, 0.13) in 2019 (see Table 1). This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that may displace Swift Parrots to edge habitats (Stojanovic et al., 2021).</p>
+<p>Based on our model predictions from part j, Swift Parrot nest box occupancy is highest near the forest edge (0m), with a predicted probability of 0.48 in 2016 (95% CI: [0.33, 0.64]) and 0.30 in 2019 (95% CI: [0.18, 0.44]). Swift Parrot occupancy declines sharply at 900m from the edge, with probabilities of 0.12 (95% CI: [0.06, 0.24]) in 2016 and 0.06 (95% CI: [0.03, 0.13]) in 2019. This negative relationship (see Figure 1) between distance and occupancy likely reflects the Swift Parrot’s dependence on forest-edge habitats for nesting and foraging (Stojanovic et al., 2021). In contrast, tree martins, a native nest competitor, were more likely to occupy nest boxes farther from the forest edge, especially in 2019, suggesting competitive interactions that displaced Swift Parrots to edge habitats (Stojanovic et al., 2021).</p>
 </section>
 </section>
 <section id="problem-4.-affective-and-exploratory-visualizations" class="level2">
