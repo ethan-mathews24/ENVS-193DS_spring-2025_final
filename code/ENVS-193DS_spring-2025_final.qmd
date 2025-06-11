@@ -416,12 +416,14 @@ ggplot(data = nest_clean, # data being used
 #| fig.show: "hide"
 
 nest_clean %>%
+  filter(swift_parrot == 1) %>%
   group_by(season) %>%
-  summarize(n = n()) # summarize each group size for the figure's caption
+  summarize(n = n())
+
 
 ```
 
-**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic et al., 2021; doi.org/10.5061/dryad.83bk3j9sb). Swift Parrot presence measurements from 2016 (n = 104) and 2019 (n = 123) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species, indicating a shift in resource availability. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points represent Swift Parrot nest box occupancy (0 = absent, 1 = present), with colors representing the year (blue = 2016, red = 2019). 
+**Figure 1. Swift Parrot occupancy probability is higher closer to the forest edge and decreases as distance increases.** Data from *Do nest boxes breed the target species or its competitors? A case study of a critically endangered bird* (Stojanovic et al., 2021; doi.org/10.5061/dryad.83bk3j9sb). Swift Parrot presence measurements from 2016 (n = 29) and 2019 (n = 20) show that 2016 had a higher occupancy probability near the forest edge, while in 2019, nest boxes farther from the forest edge were more likely to be occupied by other species, indicating a shift in resource availability. Shaded areas represent 95% confidence intervals of the model predictions. Transparent points represent Swift Parrot nest box occupancy (0 = absent, 1 = present), with colors representing the year (blue = 2016, red = 2019). 
 
 #### j. Calculate model predictions
 
